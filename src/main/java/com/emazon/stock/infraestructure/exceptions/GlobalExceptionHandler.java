@@ -1,7 +1,7 @@
 package com.emazon.stock.infraestructure.exceptions;
 
 
-import com.emazon.stock.domain.exception.CategoriaNombreDuplicadoException;
+import com.emazon.stock.domain.exception.MarcaNombreDuplicadoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -22,8 +22,8 @@ public class GlobalExceptionHandler {
                 .body(e.getMessage());
     }
 
-    @ExceptionHandler(CategoriaNombreDuplicadoException.class)
-    public ResponseEntity<String> handleCategoriaNombreDuplicadoException(RuntimeException e) {
+    @ExceptionHandler(MarcaNombreDuplicadoException.class)
+    public ResponseEntity<String> handleMarcaNombreDuplicadoException(RuntimeException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(e.getMessage());
