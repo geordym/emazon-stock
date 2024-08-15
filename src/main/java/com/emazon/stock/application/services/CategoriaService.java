@@ -1,26 +1,26 @@
 package com.emazon.stock.application.services;
 
-import com.emazon.stock.application.usecases.CrearCategoriaUseCaseImpl;
 import com.emazon.stock.domain.model.Categoria;
-import com.emazon.stock.domain.puertos.in.CrearCategoriaUseCase;
+import com.emazon.stock.domain.puertos.in.ListarCategoriasUseCase;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 
 
 @RequiredArgsConstructor
-public class CategoriaService implements CrearCategoriaUseCase {
+public class CategoriaService implements ListarCategoriasUseCase {
 
 
-    private CrearCategoriaUseCase createCategoryUseCase;
+    private ListarCategoriasUseCase listarCategoriasUseCase;
 
-    public CategoriaService(CrearCategoriaUseCaseImpl crearCategoriaUseCase) {
-        this.createCategoryUseCase = crearCategoriaUseCase;
+    public CategoriaService(ListarCategoriasUseCase listarCategoriasUseCase) {
+        this.listarCategoriasUseCase = listarCategoriasUseCase;
     }
 
 
     @Override
-    public Categoria guardarCategoria(Categoria categoria) {
-        return createCategoryUseCase.guardarCategoria(categoria);
+    public List<Categoria> listarCategorias(int page, int size, String sortBy, boolean ascending) {
+        return listarCategoriasUseCase.listarCategorias(page,size,sortBy,ascending);
     }
 
 

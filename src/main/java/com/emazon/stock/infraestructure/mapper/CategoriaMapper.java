@@ -26,16 +26,18 @@ public class CategoriaMapper {
     public static Optional<Categoria> optionalCategoriaEntityToModelCategoria(Optional<CategoriaEntity> categoriaEntityOptional) {
         return categoriaEntityOptional.map(categoriaEntity ->
                 new Categoria(
-                        categoriaEntity.getId_categoria(),
+                        categoriaEntity.getIdcategoria(),
                         categoriaEntity.getNombre(),
                         categoriaEntity.getDescripcion()
                 )
         );
     }
 
-    public static Categoria entityToDto(CategoriaEntity categoria){
-        return new Categoria(categoria.getId_categoria(), categoria.getNombre(), categoria.getDescripcion());
+    public static Categoria entityToDomain(CategoriaEntity categoria){
+        return new Categoria(categoria.getIdcategoria(), categoria.getNombre(), categoria.getDescripcion());
     }
+
+
 
     public static Categoria dtoToDomain(CategoriaRequestDTO categoria){
         return new Categoria(categoria.getId_categoria(), categoria.getNombre(), categoria.getDescripcion());

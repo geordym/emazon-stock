@@ -1,19 +1,20 @@
 package com.emazon.stock.infraestructure.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "categorias")
 public class CategoriaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_categoria")
-    private Long id_categoria;
+    private Long idcategoria;
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
@@ -21,8 +22,8 @@ public class CategoriaEntity {
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
-    public CategoriaEntity(Long id_categoria, String nombre, String descripcion) {
-        this.id_categoria = id_categoria;
+    public CategoriaEntity(Long idcategoria, String nombre, String descripcion) {
+        this.idcategoria = idcategoria;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
