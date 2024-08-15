@@ -5,6 +5,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+recreate_bd.py
 ### STS ###
 .apt_generated
 .classpath
