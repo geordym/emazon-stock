@@ -2,7 +2,10 @@ package com.emazon.stock.infraestructure.rest;
 
 
 import com.emazon.stock.application.services.CategoriaService;
-import com.emazon.stock.domain.model.Categoria;
+import com.emazon.stock.infraestructure.mapper.CategoriaMapper;
+import com.emazon.stock.infraestructure.rest.dto.request.CategoriaRequestDTO;
+import com.emazon.stock.infraestructure.rest.dto.response.CategoriaResponseDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +22,8 @@ public class CategoriaController {
     private final CategoriaService categoriaService;
 
     @PostMapping
-    public ResponseEntity<Categoria> guardarCategoria(@RequestBody Categoria categoria){
-        return new ResponseEntity<>(categoriaService.guardarCategoria(categoria), HttpStatus.OK);
+    public ResponseEntity<CategoriaResponseDTO> guardarCategoria(@RequestBody @Valid CategoriaRequestDTO categoria){
+        return new ResponseEntity<>(CategoriaMapper.domainToDto(categoriaService.guardarCategoria(CategoriaMapper.dtoToDomain(categoria))), HttpStatus.OK);
     }
 
 

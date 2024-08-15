@@ -20,7 +20,7 @@ public class CategoriaRepositoryMySQLAdapter implements CategoriaRepositoryPort 
 
     @Override
     public Categoria guardarCategoria(Categoria categoria) {
-        return CategoriaMapper.entityToDto(categoriaCrudRepositoryMySQL.save(CategoriaMapper.dtoToEntity(categoria)));
+        return CategoriaMapper.entityToDto(categoriaCrudRepositoryMySQL.save(CategoriaMapper.domainToEntity(categoria)));
     }
 
     @Override
