@@ -15,6 +15,8 @@ public class MarcaService implements ListarMarcasUseCase {
 
     @Override
     public List<Marca> listarMarcas(int page, int size, String sortBy, boolean ascending) {
-        return null;
+        return listarMarcasUseCase.listarMarcas(page,size,sortBy,ascending);
     }
+
+
 }
