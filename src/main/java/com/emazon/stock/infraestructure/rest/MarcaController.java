@@ -2,16 +2,16 @@ package com.emazon.stock.infraestructure.rest;
 
 
 import com.emazon.stock.application.services.MarcaService;
+import com.emazon.stock.domain.model.Marca;
 import com.emazon.stock.infraestructure.mapper.MarcaMapper;
 import com.emazon.stock.infraestructure.rest.dto.request.MarcaRequestDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.MarcaResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/marcas")
@@ -20,9 +20,23 @@ public class MarcaController {
 
     private final MarcaService marcaService;
 
-    @PostMapping
-    public ResponseEntity<MarcaResponseDTO> crearMarca(@RequestBody MarcaRequestDTO marcaRequestDTO){
-        return new ResponseEntity<>(MarcaMapper.domainToDto(marcaService.guardarMarca(MarcaMapper.dtoToDomain(marcaRequestDTO))), HttpStatus.OK);
+
+
+    @GetMapping
+    public ResponseEntity<List<MarcaResponseDTO>> listarMarcas(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "nombre") String sortBy,
+            @RequestParam(defaultValue = "true") boolean ascending) {
+
+
+        List<Marca> marcas = marcaService.listarMarcas(page,size,sortBy,ascending);
+
+        List<MarcaResponseDTO> marcaResponseDTOS = marcas.stream()
+                .map(MarcaMapper::domainToDto)
+                .toList();
+
+        return new ResponseEntity<>(marcaResponseDTOS, HttpStatus.OK);
     }
 
 }
