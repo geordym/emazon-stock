@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -21,10 +23,19 @@ public class CategoriaEntity {
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
+
+    @OneToMany(mappedBy = "categoria")
+    private List<CategoriaArticuloEntity> articulosCategorias;
+
     public CategoriaEntity(Long id_categoria, String nombre, String descripcion) {
         this.id_categoria = id_categoria;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
+
+    public CategoriaEntity(Long id_categoria) {
+        this.id_categoria = id_categoria;
+    }
+
 
 }

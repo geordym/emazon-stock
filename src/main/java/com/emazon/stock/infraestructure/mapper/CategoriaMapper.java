@@ -20,7 +20,7 @@ public class CategoriaMapper {
 
 
     public static CategoriaEntity domainToEntity(Categoria categoria){
-        return new CategoriaEntity(categoria.getId_categoria(), categoria.getNombre(), categoria.getDescripcion());
+        return new CategoriaEntity(categoria.getIdCategoria(), categoria.getNombre(), categoria.getDescripcion());
     }
 
     public static Optional<Categoria> optionalCategoriaEntityToModelCategoria(Optional<CategoriaEntity> categoriaEntityOptional) {
@@ -33,7 +33,7 @@ public class CategoriaMapper {
         );
     }
 
-    public static Categoria entityToDto(CategoriaEntity categoria){
+    public static Categoria entityToDomain(CategoriaEntity categoria){
         return new Categoria(categoria.getId_categoria(), categoria.getNombre(), categoria.getDescripcion());
     }
 
@@ -42,7 +42,7 @@ public class CategoriaMapper {
     }
 
     public static CategoriaResponseDTO domainToDto(Categoria categoria){
-        return new CategoriaResponseDTO(categoria.getId_categoria(), categoria.getNombre(), categoria.getDescripcion());
+        return new CategoriaResponseDTO(categoria.getIdCategoria(), categoria.getNombre(), categoria.getDescripcion());
     }
 
 

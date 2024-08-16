@@ -9,7 +9,7 @@ import com.emazon.stock.domain.puertos.out.CategoriaRepositoryPort;
 
 
 import com.emazon.stock.infraestructure.repositories.CategoriaCrudRepositoryMySQL;
-import com.emazon.stock.infraestructure.repositories.CategoriaRepositoryMySQLAdapter;
+import com.emazon.stock.infraestructure.adapters.CategoriaRepositoryMySQLAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

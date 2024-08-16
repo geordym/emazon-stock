@@ -3,14 +3,23 @@ package com.emazon.stock.domain.model;
 
 import lombok.Data;
 
+import java.util.List;
+
 import static com.emazon.stock.domain.util.Constantes.LONGITUD_DESCRIPCION_MAXIMA;
 import static com.emazon.stock.domain.util.Constantes.LONGITUD_NOMBRE_MAXIMA;
 
 @Data
 public class Categoria {
-    private Long id_categoria;
+
+    private Long idCategoria;
     private String nombre;
     private String descripcion;
+    private List<Articulo> articulos;
+
+
+    public Categoria(Long idCategoria) {
+        this.idCategoria = idCategoria;
+    }
 
     public Categoria(Long id, String nombre, String descripcion) {
         if (nombre == null || nombre.isEmpty() || nombre.length() > LONGITUD_NOMBRE_MAXIMA) {
@@ -20,7 +29,7 @@ public class Categoria {
             throw new IllegalArgumentException("La descripción es obligatoria y debe tener un máximo de 90 caracteres.");
         }
 
-        this.id_categoria = id;
+        this.idCategoria = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
