@@ -4,8 +4,9 @@ package com.emazon.stock.domain.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static com.emazon.stock.domain.util.Constantes.LONGITUD_DESCRIPCION_MAXIMA;
-import static com.emazon.stock.domain.util.Constantes.LONGITUD_NOMBRE_MAXIMA;
+import static com.emazon.stock.domain.util.Constantes.MARCA_LONGITUD_DESCRIPCION_MAXIMA;
+import static com.emazon.stock.domain.util.Constantes.MARCA_LONGITUD_NOMBRE_MAXIMA;
+
 
 @NoArgsConstructor
 @Getter
@@ -32,7 +33,7 @@ public class Marca {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre no puede estar vacío");
         }
-        if (nombre.length() > LONGITUD_NOMBRE_MAXIMA) {
+        if (nombre.length() > MARCA_LONGITUD_NOMBRE_MAXIMA) {
             throw new IllegalArgumentException("El nombre no puede tener más de 50 caracteres");
         }
         this.nombre = nombre;
@@ -43,7 +44,7 @@ public class Marca {
         if (descripcion == null || descripcion.trim().isEmpty()) {
             throw new IllegalArgumentException("La descripción no puede estar vacía");
         }
-        if (descripcion.length() > LONGITUD_DESCRIPCION_MAXIMA) {
+        if (descripcion.length() > MARCA_LONGITUD_DESCRIPCION_MAXIMA) {
             throw new IllegalArgumentException("La descripción no puede tener más de 120 caracteres");
         }
         this.descripcion = descripcion;
