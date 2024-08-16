@@ -5,61 +5,107 @@ import com.emazon.stock.application.services.CategoriaService;
 import com.emazon.stock.application.usecases.CrearCategoriaUseCaseImpl;
 import com.emazon.stock.domain.exception.CategoriaNombreDuplicadoException;
 import com.emazon.stock.domain.model.Categoria;
-import com.emazon.stock.domain.puertos.in.CrearCategoriaUseCase;
 import com.emazon.stock.domain.puertos.out.CategoriaRepositoryPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static com.emazon.stock.domain.util.Constantes.LONGITUD_DESCRIPCION_MAXIMA;
+import static com.emazon.stock.domain.util.Constantes.LONGITUD_NOMBRE_MAXIMA;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
-@SpringBootTest
-public class CategoriaTest {
-
-    @Mock
-    private CategoriaRepositoryPort categoriaRepositoryPort;
-
-    @InjectMocks
-    private CrearCategoriaUseCaseImpl crearCategoriaUseCaseImpl;
-
-    private CategoriaService categoriaService;
-
-    Categoria categoria1 = new Categoria(0L, "test", "Descripción de categoría 1");
+class CategoriaTest {
+    Categoria categoria = new Categoria(0L, "test", "Descripción de categoría 1");
+    CategoriaService categoriaService;
+    CategoriaRepositoryPort categoriaRepositoryPort;
+    CrearCategoriaUseCaseImpl crearCategoriaUseCase;
 
     @BeforeEach
     public void init() {
         MockitoAnnotations.openMocks(this);
-        categoriaService = new CategoriaService(crearCategoriaUseCaseImpl); // Inicializa CategoriaService aquí
-
-        when(categoriaRepositoryPort.obtenerCategoriaPorNombre(categoria1.getNombre())).thenReturn(Optional.of(categoria1));
-
+        categoriaRepositoryPort = Mockito.mock(CategoriaRepositoryPort.class);
+        crearCategoriaUseCase = new CrearCategoriaUseCaseImpl(categoriaRepositoryPort);
+        categoriaService =new CategoriaService(crearCategoriaUseCase);
     }
 
     @Test
-    void testErrorDuplicateCategoria() {
-        // Arrange: Configura el comportamiento esperado
-
-
-
-        // Act & Assert: Llama al método a probar y verifica que lanza la excepción
-        CategoriaNombreDuplicadoException exception = assertThrows(CategoriaNombreDuplicadoException.class, () -> {
-            categoriaService.guardarCategoria(categoria1);
+    void testExceptionCuandoSeaDuplicadoElNombre() {
+        when(categoriaRepositoryPort.obtenerCategoriaPorNombre(categoria.getNombre())).thenReturn(Optional.of(categoria));
+        // Llama al método a probar y verifica que lanza la excepción
+        assertThrows(CategoriaNombreDuplicadoException.class, () -> {
+            crearCategoriaUseCase.guardarCategoria(categoria);
         });
+    }
 
-        // Assert: Verifica que el mensaje de la excepción es el esperado
-        assertEquals("Este nombre de categoria ya esta registrado", exception.getMessage());
+    @Test
+    void testNoThrowExceptionCreandoCategoria() {
+        Categoria categoria2 = new Categoria(0L, "unique_categoria" + LocalDate.now().toString(), "testing");
+        when(categoriaRepositoryPort.obtenerCategoriaPorNombre(categoria.getNombre())).thenReturn(Optional.of(categoria));
 
-        // Verifica que el método guardarCategoria no se llame al repositorio
-       // verify(categoriaRepositoryPort, never()).guardarCategoria(any());
+        assertDoesNotThrow(() -> {
+            crearCategoriaUseCase.guardarCategoria(categoria2);
+        });
+    }
+
+    @Test
+     void testGuardarCategoriaExitoso() {
+        when(categoriaRepositoryPort.guardarCategoria(categoria)).thenReturn(categoria);
+        Categoria resultado = categoriaService.guardarCategoria(categoria);
+        assertNotNull(resultado);
+        assertEquals(categoria, resultado);
+        verify(categoriaRepositoryPort).guardarCategoria(categoria);
+    }
+
+    @Test
+     void testCrearCategoriaConNombreVacioLanzaExcepcion() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Categoria(1L, "", "Descripción válida");
+        });
+    }
+
+    @Test
+     void testCrearCategoriaConDescripcionNulaLanzaExcepcion() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Categoria(1L, "Ropa", null);
+        });
+    }
+
+    @Test
+     void testNombreDemasiadoLargoLanzaExcepcion() {
+        // Act & Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Categoria(1L, "A".repeat(LONGITUD_NOMBRE_MAXIMA + 1), "Descripción válida");
+        });
+    }
+
+    @Test
+     void testDescripcionDemasiadoLargaLanzaExcepcion() {
+        // Act & Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Categoria(1L, "Nombre válido", "A".repeat(LONGITUD_DESCRIPCION_MAXIMA + 1));
+        });
+    }
+
+    @Test
+     void testNombreValidoNoLanzaExcepcion() {
+        // Act & Assert
+        assertDoesNotThrow(() -> {
+            new Categoria(1L, "N".repeat(LONGITUD_NOMBRE_MAXIMA), "D".repeat(LONGITUD_DESCRIPCION_MAXIMA));
+        });
+    }
+
+    @Test
+     void testDescripcionValidaNoLanzaExcepcion() {
+        // Act & Assert
+        assertDoesNotThrow(() -> {
+            new Categoria(1L, "N".repeat(LONGITUD_NOMBRE_MAXIMA), "D".repeat(LONGITUD_DESCRIPCION_MAXIMA));
+        });
     }
 
 }

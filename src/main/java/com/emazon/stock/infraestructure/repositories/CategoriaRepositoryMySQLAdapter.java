@@ -3,7 +3,6 @@ package com.emazon.stock.infraestructure.repositories;
 import com.emazon.stock.domain.model.Categoria;
 import com.emazon.stock.infraestructure.mapper.CategoriaMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 
 
@@ -12,7 +11,6 @@ import com.emazon.stock.domain.puertos.out.CategoriaRepositoryPort;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Component
 public class CategoriaRepositoryMySQLAdapter implements CategoriaRepositoryPort {
 
 
