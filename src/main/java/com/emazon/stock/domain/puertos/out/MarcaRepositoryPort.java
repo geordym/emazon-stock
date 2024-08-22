@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MarcaRepositoryPort {
-    List<Marca> listarMarcas(PaginationParams paginationParams);
+    List<Marca> listMarcas(PaginationParams paginationParams);
 
 
 }

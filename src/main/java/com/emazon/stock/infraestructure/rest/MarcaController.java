@@ -20,17 +20,15 @@ public class MarcaController {
 
     private final MarcaService marcaService;
 
-
-
     @GetMapping
-    public ResponseEntity<List<MarcaResponseDTO>> listarMarcas(
+    public ResponseEntity<List<MarcaResponseDTO>> listMarcas(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "nombre") String sortBy,
             @RequestParam(defaultValue = "true") boolean ascending) {
 
 
-        List<Marca> marcas = marcaService.listarMarcas(page,size,sortBy,ascending);
+        List<Marca> marcas = marcaService.listMarcas(page,size,sortBy,ascending);
 
         List<MarcaResponseDTO> marcaResponseDTOS = marcas.stream()
                 .map(MarcaMapper::domainToDto)

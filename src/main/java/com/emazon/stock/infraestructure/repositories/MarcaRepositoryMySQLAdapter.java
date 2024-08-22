@@ -24,7 +24,7 @@ public class MarcaRepositoryMySQLAdapter implements MarcaRepositoryPort {
 
 
     @Override
-    public List<Marca> listarMarcas(PaginationParams paginationParams) {
+    public List<Marca> listMarcas(PaginationParams paginationParams) {
         PageRequest pageRequest = PageRequest.of(
                 paginationParams.getPage(),
                 paginationParams.getSize(),
