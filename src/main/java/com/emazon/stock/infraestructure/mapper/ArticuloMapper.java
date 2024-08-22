@@ -7,6 +7,7 @@ import com.emazon.stock.infraestructure.entities.ArticuloEntity;
 import com.emazon.stock.infraestructure.entities.CategoriaArticuloEntity;
 import com.emazon.stock.infraestructure.entities.CategoriaEntity;
 import com.emazon.stock.infraestructure.rest.dto.request.CreateArticuloRequestDTO;
+import com.emazon.stock.infraestructure.rest.dto.response.ArticuloResponseDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.CategoriaResponseDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.CreateArticuloResponseDTO;
 
@@ -56,9 +57,9 @@ public class ArticuloMapper {
         }).collect(Collectors.toList());
     }
 
-    public static List<CategoriaArticulo> categoriaArticuloEntityToDomain(List<CategoriaArticuloEntity> categoriaArticuloList) {
-        return categoriaArticuloList.stream().map(categoriaArticulo -> {
-            return new CategoriaArticulo(new Categoria(categoriaArticulo.getCategoria().getId_categoria()));
+    public static List<CategoriaArticulo> categoriaArticuloEntityToDomain(List<CategoriaArticuloEntity> categoriaArticuloListEntity) {
+        return categoriaArticuloListEntity.stream().map(categoriaArticuloEntity -> {
+            return new CategoriaArticulo(new Categoria(categoriaArticuloEntity.getCategoria().getId_categoria(), categoriaArticuloEntity.getCategoria().getNombre(), categoriaArticuloEntity.getCategoria().getDescripcion()));
         }).collect(Collectors.toList());
     }
 
@@ -74,9 +75,25 @@ public class ArticuloMapper {
 
         return new Articulo(articulo.getIdArticulo(),
                 articulo.getNombre(), articulo.getDescripcion(),
-                articulo.getCantidad(), articulo.getPrecio(), ArticuloMapper.categoriaArticuloEntityToDomain(articulo.getCategorias()));
+                articulo.getCantidad(), articulo.getPrecio(),
+                ArticuloMapper.categoriaArticuloEntityToDomain(articulo.getCategorias()
+
+                ));
     }
 
+    public static List<CategoriaResponseDTO> listCategoriaArticuloDomainToArticuloResponseDTOList(List<CategoriaArticulo> categoriaArticuloDomainList) {
+        return categoriaArticuloDomainList.stream().map(categoriaArticuloDomain -> {
+            return new CategoriaResponseDTO(categoriaArticuloDomain.getCategoria().getNombre(), categoriaArticuloDomain.getCategoria().getDescripcion());
+        }).collect(Collectors.toList());
+    }
 
+    public static ArticuloResponseDTO domainToDto(Articulo articulo) {
+        return new ArticuloResponseDTO(articulo.getIdArticulo(),
+                articulo.getNombre(),
+                articulo.getDescripcion(), articulo.getCantidad(),
+                articulo.getPrecio(),
+                ArticuloMapper.listCategoriaArticuloDomainToArticuloResponseDTOList(articulo.getCategorias())
+                );
+    }
 
 }

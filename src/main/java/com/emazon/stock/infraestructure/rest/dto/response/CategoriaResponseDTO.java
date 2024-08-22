@@ -8,10 +8,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CategoriaResponseDTO {
-
-    @Null
-    private Long id_categoria;
+    public class CategoriaResponseDTO {
 
     @NotBlank(message = "El nombre de la categoría no puede estar vacío.")
     @Size(max = 50, message = "El tamaño máximo del nombre es de 50 caracteres.")

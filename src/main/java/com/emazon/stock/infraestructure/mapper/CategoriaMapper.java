@@ -42,7 +42,7 @@ public class CategoriaMapper {
     }
 
     public static CategoriaResponseDTO domainToDto(Categoria categoria){
-        return new CategoriaResponseDTO(categoria.getIdCategoria(), categoria.getNombre(), categoria.getDescripcion());
+        return new CategoriaResponseDTO(categoria.getNombre(), categoria.getDescripcion());
     }
 
 
