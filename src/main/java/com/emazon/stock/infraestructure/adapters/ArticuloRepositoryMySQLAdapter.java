@@ -3,6 +3,7 @@ package com.emazon.stock.infraestructure.adapters;
 import com.emazon.stock.domain.model.Articulo;
 import com.emazon.stock.domain.puertos.out.ArticuloRepositoryPort;
 import com.emazon.stock.domain.puertos.out.CategoriaRepositoryPort;
+import com.emazon.stock.domain.util.PaginationParams;
 import com.emazon.stock.infraestructure.entities.ArticuloEntity;
 import com.emazon.stock.infraestructure.entities.CategoriaArticuloEntity;
 import com.emazon.stock.infraestructure.entities.CategoriaEntity;
@@ -27,6 +28,11 @@ public class ArticuloRepositoryMySQLAdapter implements ArticuloRepositoryPort {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Override
+    public List<Articulo> listArticles(PaginationParams paginationParams) {
+        return articuloCrudRepositoryMySQL.findAll();
+    }
 
     @Override
     @Transactional
