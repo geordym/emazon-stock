@@ -2,19 +2,18 @@ package com.emazon.stock.application.services;
 
 import com.emazon.stock.domain.model.Articulo;
 import com.emazon.stock.domain.puertos.in.CrearArticuloUseCase;
-import com.emazon.stock.domain.puertos.in.ListarArticulosUseCase;
+import com.emazon.stock.domain.puertos.in.ListArticlesUseCase;
+import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
-
 
 @RequiredArgsConstructor
-public class ArticuloService implements CrearArticuloUseCase, ListarArticulosUseCase {
+public class ArticuloService implements CrearArticuloUseCase, ListArticlesUseCase {
 
 
     private final CrearArticuloUseCase crearArticuloUseCase;
-    private final ListarArticulosUseCase listarArticulosUseCase;
+    private final ListArticlesUseCase listarArticulosUseCase;
 
 
     @Override
@@ -24,8 +23,8 @@ public class ArticuloService implements CrearArticuloUseCase, ListarArticulosUse
 
 
     @Override
-    public List<Articulo> listarArticulos(PaginationParams paginationParams) {
-        return null;
+    public PaginationCustom listArticles(PaginationParams paginationParams) {
+        return listarArticulosUseCase.listArticles(paginationParams);
     }
 
 

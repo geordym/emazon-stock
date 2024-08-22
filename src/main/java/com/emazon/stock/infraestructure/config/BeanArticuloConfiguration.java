@@ -3,6 +3,8 @@ package com.emazon.stock.infraestructure.config;
 
 import com.emazon.stock.application.services.ArticuloService;
 import com.emazon.stock.application.usecases.CrearArticuloUseCaseImpl;
+import com.emazon.stock.application.usecases.ListArticlesUseCaseImpl;
+import com.emazon.stock.domain.puertos.in.ListarCategoriasPorArticuloUseCase;
 import com.emazon.stock.domain.puertos.out.ArticuloRepositoryPort;
 import com.emazon.stock.domain.puertos.out.CategoriaRepositoryPort;
 import com.emazon.stock.infraestructure.adapters.ArticuloRepositoryMySQLAdapter;
@@ -21,7 +23,7 @@ public class BeanArticuloConfiguration {
 
     @Bean
     public ArticuloService articuloService(final ArticuloRepositoryPort articuloRepositoryPort){
-        return new ArticuloService(new CrearArticuloUseCaseImpl(articuloRepositoryPort));
+        return new ArticuloService(new CrearArticuloUseCaseImpl(articuloRepositoryPort), new ListArticlesUseCaseImpl(articuloRepositoryPort));
     }
 
 }
