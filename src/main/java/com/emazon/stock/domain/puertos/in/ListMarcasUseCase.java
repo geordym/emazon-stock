@@ -1,11 +1,13 @@
 package com.emazon.stock.domain.puertos.in;
 
 import com.emazon.stock.domain.model.Marca;
+import com.emazon.stock.domain.util.PaginationCustom;
+import com.emazon.stock.domain.util.PaginationParams;
 
 import java.util.List;
 
 public interface ListMarcasUseCase {
 
-    List<Marca> listMarcas(int page, int size, String sortBy, boolean ascending);
+    PaginationCustom listMarcas(PaginationParams paginationParams);
 
 }

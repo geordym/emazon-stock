@@ -3,6 +3,7 @@ package com.emazon.stock.application.usecases.MarcaImpl;
 import com.emazon.stock.domain.model.Marca;
 import com.emazon.stock.domain.puertos.in.ListMarcasUseCase;
 import com.emazon.stock.domain.puertos.out.MarcaRepositoryPort;
+import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,9 +17,11 @@ public class ListMarcasUseCaseImpl implements ListMarcasUseCase {
 
     private final MarcaRepositoryPort marcaRepositoryPort;
 
+
     @Override
-    public List<Marca> listMarcas(int page, int size, String sortBy, boolean ascending) {
-        PaginationParams paginationParams = new PaginationParams(page,size,sortBy,ascending);
+    public PaginationCustom listMarcas(PaginationParams paginationParams) {
         return marcaRepositoryPort.listMarcas(paginationParams);
     }
+
+
 }

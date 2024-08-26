@@ -3,6 +3,7 @@ package com.emazon.stock.infraestructure.rest;
 
 import com.emazon.stock.application.services.MarcaService;
 import com.emazon.stock.domain.model.Marca;
+import com.emazon.stock.domain.util.PaginationParams;
 import com.emazon.stock.infraestructure.mapper.MarcaMapper;
 import com.emazon.stock.infraestructure.rest.dto.request.MarcaRequestDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.MarcaResponseDTO;
@@ -28,7 +29,7 @@ public class MarcaController {
             @RequestParam(defaultValue = "true") boolean ascending) {
 
 
-        List<Marca> marcas = marcaService.listMarcas(page,size,sortBy,ascending);
+        List<Marca> marcas = marcaService.listMarcas(new PaginationParams(page,size,sortBy,ascending));
 
         List<MarcaResponseDTO> marcaResponseDTOS = marcas.stream()
                 .map(MarcaMapper::domainToDto)

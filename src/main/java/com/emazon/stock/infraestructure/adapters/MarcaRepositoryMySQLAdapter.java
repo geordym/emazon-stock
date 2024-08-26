@@ -2,6 +2,7 @@ package com.emazon.stock.infraestructure.adapters;
 
 import com.emazon.stock.domain.model.Marca;
 import com.emazon.stock.domain.puertos.out.MarcaRepositoryPort;
+import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;
 import com.emazon.stock.infraestructure.entities.MarcaEntity;
 import com.emazon.stock.infraestructure.mapper.MarcaMapper;
@@ -25,7 +26,7 @@ public class MarcaRepositoryMySQLAdapter implements MarcaRepositoryPort {
 
 
     @Override
-    public List<Marca> listMarcas(PaginationParams paginationParams) {
+    public PaginationCustom listMarcas(PaginationParams paginationParams) {
         PageRequest pageRequest = PageRequest.of(
                 paginationParams.getPage(),
                 paginationParams.getSize(),
