@@ -1,17 +1,19 @@
 package com.emazon.stock.application.services;
 
 import com.emazon.stock.domain.model.Marca;
-import com.emazon.stock.domain.puertos.in.CrearMarcaUseCase;
+import com.emazon.stock.domain.puertos.in.ListMarcasUseCase;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
-public class MarcaService implements CrearMarcaUseCase {
+public class MarcaService implements ListMarcasUseCase {
 
-    private final CrearMarcaUseCase crearMarcaUseCase;
+    private final ListMarcasUseCase listarMarcasUseCase;
 
     @Override
-    public Marca guardarMarca(Marca marca) {
-        return crearMarcaUseCase.guardarMarca(marca);
+    public List<Marca> listMarcas(int page, int size, String sortBy, boolean ascending) {
+        return listarMarcasUseCase.listMarcas(page,size,sortBy,ascending);
     }
 }
