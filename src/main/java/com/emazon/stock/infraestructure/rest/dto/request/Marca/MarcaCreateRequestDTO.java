@@ -1,4 +1,4 @@
-package com.emazon.stock.infraestructure.rest.dto.request;
+package com.emazon.stock.infraestructure.rest.dto.request.Marca;
 
 
 import jakarta.validation.constraints.NotBlank;

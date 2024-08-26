@@ -2,8 +2,8 @@ package com.emazon.stock.infraestructure.mapper;
 
 import com.emazon.stock.domain.model.Marca;
 import com.emazon.stock.infraestructure.entities.MarcaEntity;
-import com.emazon.stock.infraestructure.rest.dto.request.MarcaCreateRequestDTO;
-import com.emazon.stock.infraestructure.rest.dto.response.MarcaCreateResponseDTO;
+import com.emazon.stock.infraestructure.rest.dto.request.Marca.MarcaCreateRequestDTO;
+import com.emazon.stock.infraestructure.rest.dto.response.Marca.MarcaCreateResponseDTO;
 
 import java.util.Optional;
 

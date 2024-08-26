@@ -1,4 +1,4 @@
-package com.emazon.stock.infraestructure.rest.dto.response;
+package com.emazon.stock.infraestructure.rest.dto.response.Marca;
 
 
 import lombok.AllArgsConstructor;
