@@ -3,6 +3,7 @@ package com.emazon.stock.application.services;
 import com.emazon.stock.domain.model.Marca;
 import com.emazon.stock.domain.puertos.in.CreateMarcaUseCase;
 import com.emazon.stock.domain.puertos.in.ListMarcasUseCase;
+import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +28,7 @@ public class MarcaService implements ListMarcasUseCase, CreateMarcaUseCase {
 
 
     @Override
-    public List<Marca> listMarcas(PaginationParams paginationParams) {
+    public PaginationCustom listMarcas(PaginationParams paginationParams) {
         return listarMarcasUseCase.listMarcas(paginationParams);
     }
 

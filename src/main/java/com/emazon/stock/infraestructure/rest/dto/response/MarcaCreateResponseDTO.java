@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MarcaResponseDTO {
+public class MarcaCreateResponseDTO {
 
     private Long id;
     private String nombre;

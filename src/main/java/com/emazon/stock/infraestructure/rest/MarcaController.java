@@ -3,10 +3,11 @@ package com.emazon.stock.infraestructure.rest;
 
 import com.emazon.stock.application.services.MarcaService;
 import com.emazon.stock.domain.model.Marca;
+import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;
 import com.emazon.stock.infraestructure.mapper.MarcaMapper;
-import com.emazon.stock.infraestructure.rest.dto.request.MarcaRequestDTO;
-import com.emazon.stock.infraestructure.rest.dto.response.MarcaResponseDTO;
+import com.emazon.stock.infraestructure.rest.dto.request.MarcaCreateRequestDTO;
+import com.emazon.stock.infraestructure.rest.dto.response.MarcaCreateResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,26 +23,29 @@ public class MarcaController {
     private final MarcaService marcaService;
 
     @GetMapping
-    public ResponseEntity<List<MarcaResponseDTO>> listMarcas(
+    public ResponseEntity<PaginationCustom> listMarcas(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "nombre") String sortBy,
             @RequestParam(defaultValue = "true") boolean ascending) {
 
 
-        List<Marca> marcas = marcaService.listMarcas(new PaginationParams(page,size,sortBy,ascending));
+        PaginationCustom pagination = marcaService.
+                listMarcas(new PaginationParams(page, size, sortBy, ascending));
 
-        List<MarcaResponseDTO> marcaResponseDTOS = marcas.stream()
+        List<Marca> marcaDomainList = pagination.getContent();
+        List<MarcaCreateResponseDTO> marcaDTOList = marcaDomainList.stream()
                 .map(MarcaMapper::domainToDto)
                 .toList();
 
-        return new ResponseEntity<>(marcaResponseDTOS, HttpStatus.OK);
+        pagination.setContent(marcaDTOList);
+        return new ResponseEntity<>(pagination, HttpStatus.OK);
     }
 
 
     @PostMapping
-    public ResponseEntity<MarcaResponseDTO> createMark(@RequestBody MarcaRequestDTO marcaRequestDTO){
-        return new ResponseEntity<>(MarcaMapper.domainToDto(marcaService.saveMarca(MarcaMapper.dtoToDomain(marcaRequestDTO))), HttpStatus.OK);
+    public ResponseEntity<MarcaCreateResponseDTO> createMarca(@RequestBody MarcaCreateRequestDTO marcaCreateRequestDTO){
+        return new ResponseEntity<>(MarcaMapper.domainToDto(marcaService.saveMarca(MarcaMapper.dtoToDomain(marcaCreateRequestDTO))), HttpStatus.OK);
     }
 
 }

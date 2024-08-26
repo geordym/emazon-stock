@@ -32,8 +32,20 @@ public class MarcaRepositoryMySQLAdapter implements MarcaRepositoryPort {
                 paginationParams.getSize(),
                 paginationParams.isAscending() ? Sort.by(paginationParams.getSortBy()).ascending() : Sort.by(paginationParams.getSortBy()).descending()
         );
-        Page<MarcaEntity> categoriaPage = marcaCrudRepositoryMySQL.findAll(pageRequest);
-        return categoriaPage.getContent().stream().map(MarcaMapper::entityToDomain).toList();
+        Page<MarcaEntity> marcaPage = marcaCrudRepositoryMySQL.findAll(pageRequest);
+        List<Marca> marcaList = marcaPage.getContent()
+                .stream()
+                .map(MarcaMapper::entityToDomain)
+                .toList();
+        PaginationCustom<Marca> pagination = new PaginationCustom<>(
+                marcaList,
+                marcaPage.getNumber(),
+                marcaPage.getSize(),
+                marcaPage.getTotalElements(),
+                marcaPage.getTotalPages(),
+                marcaPage.isLast()
+        );
+        return pagination;
     }
 
     @Override

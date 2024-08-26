@@ -2,8 +2,8 @@ package com.emazon.stock.infraestructure.mapper;
 
 import com.emazon.stock.domain.model.Marca;
 import com.emazon.stock.infraestructure.entities.MarcaEntity;
-import com.emazon.stock.infraestructure.rest.dto.request.MarcaRequestDTO;
-import com.emazon.stock.infraestructure.rest.dto.response.MarcaResponseDTO;
+import com.emazon.stock.infraestructure.rest.dto.request.MarcaCreateRequestDTO;
+import com.emazon.stock.infraestructure.rest.dto.response.MarcaCreateResponseDTO;
 
 import java.util.Optional;
 
@@ -13,9 +13,9 @@ public class MarcaMapper {
 
 
 
-    public static MarcaEntity dtoToEntity(MarcaRequestDTO marca){
+    public static MarcaEntity dtoToEntity(MarcaCreateRequestDTO marca){
 
-        return new MarcaEntity(marca.getId(),marca.getNombre(),marca.getDescripcion());
+        return new MarcaEntity(marca.getNombre(),marca.getDescripcion());
     }
 
 
@@ -30,12 +30,12 @@ public class MarcaMapper {
 
 
 
-    public static Marca dtoToDomain(MarcaRequestDTO marca){
-        return new Marca(marca.getId(),marca.getNombre(),marca.getDescripcion());
+    public static Marca dtoToDomain(MarcaCreateRequestDTO marca){
+        return new Marca(marca.getNombre(),marca.getDescripcion());
     }
 
-    public static MarcaResponseDTO domainToDto(Marca marca){
-        return new MarcaResponseDTO(marca.getId(),marca.getNombre(),marca.getDescripcion());
+    public static MarcaCreateResponseDTO domainToDto(Marca marca){
+        return new MarcaCreateResponseDTO(marca.getId(),marca.getNombre(),marca.getDescripcion());
     }
 
 

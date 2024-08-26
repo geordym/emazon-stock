@@ -23,6 +23,10 @@ public class Marca {
         setDescripcion(descripcion);  
     }
 
+    public Marca(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
 
     public void setId(Long id) {
         this.id = id;

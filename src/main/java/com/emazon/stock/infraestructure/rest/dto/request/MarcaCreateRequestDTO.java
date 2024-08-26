@@ -11,10 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MarcaRequestDTO {
-
-    @Null(message = "El ID debe ser nulo")
-    private Long id;
+public class MarcaCreateRequestDTO {
 
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(max = 50, message = "El nombre no puede tener más de 50 caracteres")

@@ -26,6 +26,8 @@ public class MarcaEntity {
     @Column(length = 120, nullable = false)
     private String descripcion;
 
-
-
+    public MarcaEntity(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
 }
