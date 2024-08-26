@@ -1,0 +1,5 @@
+CREATE TABLE marcas (
+    id_marca BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) UNIQUE NOT NULL,
+    descripcion VARCHAR(120) NOT NULL
+);
