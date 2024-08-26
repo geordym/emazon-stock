@@ -1,4 +1,4 @@
-package com.emazon.stock.application.usecases;
+package com.emazon.stock.application.usecases.MarcaImpl;
 
 import com.emazon.stock.domain.model.Marca;
 import com.emazon.stock.domain.puertos.in.ListMarcasUseCase;

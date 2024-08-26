@@ -1,10 +1,11 @@
-package com.emazon.stock.infraestructure.repositories;
+package com.emazon.stock.infraestructure.adapters;
 
 import com.emazon.stock.domain.model.Marca;
 import com.emazon.stock.domain.puertos.out.MarcaRepositoryPort;
 import com.emazon.stock.domain.util.PaginationParams;
 import com.emazon.stock.infraestructure.entities.MarcaEntity;
 import com.emazon.stock.infraestructure.mapper.MarcaMapper;
+import com.emazon.stock.infraestructure.repositories.MarcaCrudRepositoryMySQL;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +35,17 @@ public class MarcaRepositoryMySQLAdapter implements MarcaRepositoryPort {
         return categoriaPage.getContent().stream().map(MarcaMapper::entityToDomain).toList();
     }
 
+    @Override
+    public Marca saveMarca(Marca marca) {
+        return MarcaMapper.entityToDomain(marcaCrudRepositoryMySQL.save
+                (MarcaMapper.domainToEntity(marca))
+        );
+    }
 
 
+    @Override
+    public Optional<Marca> obtenerMarcaPorNombre(String nombre) {
+        return MarcaMapper.dtoToDomain(marcaCrudRepositoryMySQL.findByNombre(nombre));
+    }
 
 }

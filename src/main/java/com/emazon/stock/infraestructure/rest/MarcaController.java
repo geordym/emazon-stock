@@ -37,4 +37,10 @@ public class MarcaController {
         return new ResponseEntity<>(marcaResponseDTOS, HttpStatus.OK);
     }
 
+
+    @PostMapping
+    public ResponseEntity<MarcaResponseDTO> createMark(@RequestBody MarcaRequestDTO marcaRequestDTO){
+        return new ResponseEntity<>(MarcaMapper.domainToDto(marcaService.saveMarca(MarcaMapper.dtoToDomain(marcaRequestDTO))), HttpStatus.OK);
+    }
+
 }

@@ -9,5 +9,9 @@ import java.util.Optional;
 public interface MarcaRepositoryPort {
     List<Marca> listMarcas(PaginationParams paginationParams);
 
+    Marca saveMarca(Marca marca);
+
+    Optional<Marca> obtenerMarcaPorNombre(String nombre);
+
 
 }
