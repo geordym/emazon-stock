@@ -3,6 +3,7 @@ package com.emazon.stock.domain;
 
 import com.emazon.stock.application.services.ArticuloService;
 import com.emazon.stock.application.usecases.CrearArticuloUseCaseImpl;
+import com.emazon.stock.application.usecases.ListArticlesUseCaseImpl;
 import com.emazon.stock.domain.exception.ArticuloCategoriaRepetidaException;
 import com.emazon.stock.domain.exception.ArticuloConExcesoCategorias;
 import com.emazon.stock.domain.exception.ArticuloConFaltaDeCategorias;
@@ -42,7 +43,8 @@ class ArticuloTest {
         MockitoAnnotations.openMocks(this);
         articuloRepositoryPort = Mockito.mock(ArticuloRepositoryPort.class);
         crearArticuloUseCase = new CrearArticuloUseCaseImpl(articuloRepositoryPort);
-        articuloService = new ArticuloService(crearArticuloUseCase);
+        ListArticlesUseCaseImpl listarArticuloUseCase = new ListArticlesUseCaseImpl(articuloRepositoryPort);
+        articuloService = new ArticuloService(crearArticuloUseCase, listarArticuloUseCase);
 
         CategoriaArticulo categoriaArticulo = new CategoriaArticulo(articulo,categoria1);
         categoriaArticuloList.add(categoriaArticulo);

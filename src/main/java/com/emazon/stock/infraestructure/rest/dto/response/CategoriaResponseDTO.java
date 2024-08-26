@@ -10,12 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor
     public class CategoriaResponseDTO {
 
-    @NotBlank(message = "El nombre de la categoría no puede estar vacío.")
-    @Size(max = 50, message = "El tamaño máximo del nombre es de 50 caracteres.")
     private String nombre;
-
-    @NotBlank(message = "La descripción de la categoría es obligatoria.")
-    @Size(max = 90, message = "El tamaño máximo de la descripción es de 90 caracteres.")
     private String descripcion;
 
 
