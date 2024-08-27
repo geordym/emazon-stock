@@ -1,4 +1,4 @@
-package com.emazon.stock.application.usecases.CategoriaImpl;
+package com.emazon.stock.application.usecases.CategoryImpl;
 
 import com.emazon.stock.domain.puertos.in.ListCategoriesUseCase;
 import com.emazon.stock.domain.puertos.out.CategoryRepositoryPort;

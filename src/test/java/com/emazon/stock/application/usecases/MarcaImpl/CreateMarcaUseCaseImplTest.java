@@ -1,8 +1,6 @@
-package com.emazon.stock.application.usecases.MarcasImpl;
+package com.emazon.stock.application.usecases.MarcaImpl;
 
 import com.emazon.stock.application.services.MarcaService;
-import com.emazon.stock.application.usecases.MarcaImpl.CreateMarcaUseCaseImpl;
-import com.emazon.stock.application.usecases.MarcaImpl.ListMarcasUseCaseImpl;
 import com.emazon.stock.domain.exception.MarcaNombreDuplicadoException;
 import com.emazon.stock.domain.model.Marca;
 import com.emazon.stock.domain.puertos.out.MarcaRepositoryPort;

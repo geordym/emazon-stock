@@ -5,8 +5,8 @@ import com.emazon.stock.application.services.CategoryService;
 import com.emazon.stock.application.services.MarcaService;
 
 
-import com.emazon.stock.application.usecases.CategoriaImpl.CreateCategoryUseCaseImpl;
-import com.emazon.stock.application.usecases.CategoriaImpl.ListCategoriesUseCaseImpl;
+import com.emazon.stock.application.usecases.CategoryImpl.CreateCategoryUseCaseImpl;
+import com.emazon.stock.application.usecases.CategoryImpl.ListCategoriesUseCaseImpl;
 import com.emazon.stock.application.usecases.MarcaImpl.CreateMarcaUseCaseImpl;
 import com.emazon.stock.application.usecases.MarcaImpl.ListMarcasUseCaseImpl;
 import com.emazon.stock.domain.puertos.out.CategoryRepositoryPort;
