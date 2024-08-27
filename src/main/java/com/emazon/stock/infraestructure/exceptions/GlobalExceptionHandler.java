@@ -1,6 +1,9 @@
 package com.emazon.stock.infraestructure.exceptions;
 
 
+import com.emazon.stock.domain.exception.ArticuloConExcesoCategoriasException;
+import com.emazon.stock.domain.exception.ArticuloConFaltaDeCategoriasException;
+import com.emazon.stock.domain.exception.CategoryDuplicatedNameException;
 import com.emazon.stock.domain.exception.MarcaNombreDuplicadoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +17,36 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(CategoryDuplicatedNameException.class)
+    public ResponseEntity<String> handleCategoryDuplicatedNameException(CategoryDuplicatedNameException e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
+    }
+
+    @ExceptionHandler(ArticuloConExcesoCategoriasException.class)
+    public ResponseEntity<String> handleArticuloCategoriaRepetidaException(ArticuloConExcesoCategoriasException e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
+    }
+
+    @ExceptionHandler(ArticuloConExcesoCategoriasException.class)
+    public ResponseEntity<String> handleArticuloConExcesoCategoriasException(ArticuloConExcesoCategoriasException e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
+    }
+
+    @ExceptionHandler(ArticuloConFaltaDeCategoriasException.class)
+    public ResponseEntity<String> handleArticuloConFaltaDeCategoriasException(ArticuloConFaltaDeCategoriasException e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
+    }
+
+
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgument(IllegalArgumentException e) {

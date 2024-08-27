@@ -8,8 +8,10 @@ import com.emazon.stock.infraestructure.entities.ArticuloEntity;
 import com.emazon.stock.infraestructure.entities.CategoryArticuloEntity;
 import com.emazon.stock.infraestructure.entities.CategoryEntity;
 import com.emazon.stock.infraestructure.rest.dto.request.Articulo.CreateArticuloRequestDTO;
+import com.emazon.stock.infraestructure.rest.dto.response.Articulo.ArticuloResponseDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.Articulo.CreateArticuloResponseDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.Categoria.CategoryResponseDTO;
+import com.emazon.stock.infraestructure.rest.dto.response.Categoria.CategoryShortResponseDTO;
 
 
 import java.util.Arrays;
@@ -46,6 +48,27 @@ public class ArticuloMapper {
         return new CreateArticuloResponseDTO(articulo.getIdArticulo(),articulo.getNombre(),
                 articulo.getDescripcion(), articulo.getCantidad(), articulo.getPrecio(),
                 categoriaResponseDTOS
+        );
+    }
+
+    public static List<CategoryResponseDTO> listCategoriaArticuloDomainToArticuloResponseDTOList(List<CategoryArticulo> categoriaArticuloDomainList) {
+        return categoriaArticuloDomainList.stream().map(categoriaArticuloDomain -> {
+            return new CategoryResponseDTO(categoriaArticuloDomain.getCategory().getId_categoria(), categoriaArticuloDomain.getCategory().getName(), categoriaArticuloDomain.getCategory().getDescription());
+        }).collect(Collectors.toList());
+    }
+
+    public static List<CategoryShortResponseDTO> listCategoriaArticuloDomainToArticuloShortResponseDTOList(List<CategoryArticulo> categoriaArticuloDomainList) {
+        return categoriaArticuloDomainList.stream().map(categoriaArticuloDomain -> {
+            return new CategoryShortResponseDTO(categoriaArticuloDomain.getCategory().getId_categoria(), categoriaArticuloDomain.getCategory().getName());
+        }).collect(Collectors.toList());
+    }
+
+    public static ArticuloResponseDTO domainToDto(Articulo articulo) {
+        return new ArticuloResponseDTO(articulo.getIdArticulo(),
+                articulo.getNombre(),
+                articulo.getDescripcion(), articulo.getCantidad(),
+                articulo.getPrecio(),
+                ArticuloMapper.listCategoriaArticuloDomainToArticuloShortResponseDTOList(articulo.getCategories())
         );
     }
 

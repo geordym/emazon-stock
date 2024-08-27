@@ -1,12 +1,10 @@
-package com.emazon.stock.domain.puertos.out;
+package com.emazon.stock.domain.puertos.in;
 
-import com.emazon.stock.domain.model.Articulo;
 import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;
 
-public interface ArticuloRepositoryPort {
+public interface ListArticlesUseCase {
 
-    Articulo saveArticulo(Articulo articulo);
     PaginationCustom listArticles(PaginationParams paginationParams);
 
 }
