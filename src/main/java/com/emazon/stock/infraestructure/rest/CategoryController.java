@@ -1,9 +1,8 @@
 package com.emazon.stock.infraestructure.rest;
 
 
-import com.emazon.stock.application.services.CategoryService;
+import com.emazon.stock.application.implementations.CategoryService;
 import com.emazon.stock.domain.exception.CategoryDuplicatedNameException;
-import com.emazon.stock.domain.model.Category;
 import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;
 import com.emazon.stock.infraestructure.mapper.CategoryMapper;
@@ -19,8 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")

@@ -4,10 +4,8 @@ import com.emazon.stock.domain.model.Marca;
 import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;
 
-import java.util.List;
-
-public interface ListMarcasUseCase {
-
+public interface MarcaUseCases {
+    Marca saveMarca(Marca marca);
     PaginationCustom listMarcas(PaginationParams paginationParams);
 
 }

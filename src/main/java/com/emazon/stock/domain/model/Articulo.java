@@ -13,20 +13,30 @@ public class Articulo {
     private String descripcion;
     private int cantidad;
     private double precio;
-    private List<CategoryArticulo> categories;
+    private List<Category> categories;
+    private Marca marca;
 
 
+    public Articulo(String nombre, String descripcion, int cantidad, double precio, List<Category> categories, Marca marca) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.cantidad = cantidad;
+        this.precio = precio;
+        this.categories = categories;
+        this.marca = marca;
+    }
 
-    public Articulo(Long idArticulo, String nombre, String descripcion, int cantidad, double precio, List<CategoryArticulo> categorias) {
+    public Articulo(Long idArticulo, String nombre, String descripcion, int cantidad, double precio, List<Category> categorias, Marca marca) {
         this.idArticulo = idArticulo;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.cantidad = cantidad;
         this.precio = precio;
         this.categories = categorias;
+        this.marca = marca;
     }
 
-    public Articulo(String nombre, String descripcion, int cantidad, double precio, List<CategoryArticulo> categories) {
+    public Articulo(String nombre, String descripcion, int cantidad, double precio, List<Category> categories) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.cantidad = cantidad;

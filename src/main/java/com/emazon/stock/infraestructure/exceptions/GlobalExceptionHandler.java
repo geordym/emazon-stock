@@ -1,10 +1,7 @@
 package com.emazon.stock.infraestructure.exceptions;
 
 
-import com.emazon.stock.domain.exception.ArticuloConExcesoCategoriasException;
-import com.emazon.stock.domain.exception.ArticuloConFaltaDeCategoriasException;
-import com.emazon.stock.domain.exception.CategoryDuplicatedNameException;
-import com.emazon.stock.domain.exception.MarcaNombreDuplicadoException;
+import com.emazon.stock.domain.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -25,8 +22,8 @@ public class GlobalExceptionHandler {
                 .body(e.getMessage());
     }
 
-    @ExceptionHandler(ArticuloConExcesoCategoriasException.class)
-    public ResponseEntity<String> handleArticuloCategoriaRepetidaException(ArticuloConExcesoCategoriasException e) {
+    @ExceptionHandler(ArticuloCategoriaRepetidaException.class)
+    public ResponseEntity<String> handleArticuloCategoriaRepetidaException(ArticuloCategoriaRepetidaException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(e.getMessage());

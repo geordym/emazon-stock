@@ -1,7 +1,7 @@
 package com.emazon.stock.infraestructure.rest;
 
 
-import com.emazon.stock.application.services.MarcaService;
+import com.emazon.stock.application.implementations.MarcaService;
 import com.emazon.stock.domain.model.Marca;
 import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;

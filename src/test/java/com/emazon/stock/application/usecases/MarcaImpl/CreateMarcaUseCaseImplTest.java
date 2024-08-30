@@ -1,9 +1,10 @@
 package com.emazon.stock.application.usecases.MarcaImpl;
 
-import com.emazon.stock.application.services.MarcaService;
+import com.emazon.stock.application.implementations.MarcaService;
 import com.emazon.stock.domain.exception.MarcaNombreDuplicadoException;
 import com.emazon.stock.domain.model.Marca;
 import com.emazon.stock.domain.puertos.out.MarcaRepositoryPort;
+import com.emazon.stock.domain.usecases.MarcaImpl.MarcaUseCasesImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,17 +27,14 @@ public class CreateMarcaUseCaseImplTest {
     Marca marca = new Marca(0L, "test", "Descripción de marca 1");
     MarcaService marcaService;
     MarcaRepositoryPort marcaRepositoryPort;
-    CreateMarcaUseCaseImpl crearMarcaUseCase;
+    MarcaUseCasesImpl crearMarcaUseCase;
 
-    ListMarcasUseCaseImpl listMarcaUseCase;
+    MarcaUseCasesImpl listMarcaUseCase;
 
     @BeforeEach
     public void init() {
         MockitoAnnotations.openMocks(this);
         marcaRepositoryPort = Mockito.mock(MarcaRepositoryPort.class);
-        crearMarcaUseCase = new CreateMarcaUseCaseImpl(marcaRepositoryPort);
-        listMarcaUseCase = new ListMarcasUseCaseImpl(marcaRepositoryPort);
-        marcaService  = new MarcaService(listMarcaUseCase,crearMarcaUseCase);
     }
 
 

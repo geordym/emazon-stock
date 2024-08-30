@@ -1,6 +1,8 @@
-package com.emazon.stock.application.services;
+package com.emazon.stock.application.implementations;
 
+import com.emazon.stock.application.services.ICategoryService;
 import com.emazon.stock.domain.model.Category;
+import com.emazon.stock.domain.puertos.in.CategoryUseCases;
 import com.emazon.stock.domain.puertos.in.CreateCategoryUseCase;
 import com.emazon.stock.domain.puertos.in.ListCategoriesUseCase;
 import com.emazon.stock.domain.util.PaginationCustom;
@@ -8,17 +10,19 @@ import com.emazon.stock.domain.util.PaginationParams;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class CategoryService implements CreateCategoryUseCase, ListCategoriesUseCase {
-    private final CreateCategoryUseCase createCategoryUseCase;
-    private final ListCategoriesUseCase listCategoriesUseCase;
+public class CategoryService implements ICategoryService {
+
+
+    private final CategoryUseCases categoryUseCases;
 
     @Override
     public Category saveCategory(Category category) {
-        return createCategoryUseCase.saveCategory(category);
+        return categoryUseCases.saveCategory(category);
     }
 
     @Override
     public PaginationCustom listCategories(PaginationParams paginationParams) {
-        return listCategoriesUseCase.listCategories(paginationParams);
+        return categoryUseCases.listCategories(paginationParams);
     }
+
 }

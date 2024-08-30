@@ -24,6 +24,8 @@ repositories {
 }
 
 dependencies {
+	implementation ('com.github.javafaker:javafaker:1.0.2') { exclude module: 'org.yaml' }
+	implementation group: 'org.yaml', name: 'snakeyaml', version: '1.26'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 

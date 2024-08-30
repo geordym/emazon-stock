@@ -1,25 +1,22 @@
-package com.emazon.stock.application.usecases.MarcaImpl;
+package com.emazon.stock.domain.usecases.MarcaImpl;
 
 import com.emazon.stock.domain.exception.MarcaNombreDuplicadoException;
 import com.emazon.stock.domain.model.Marca;
-import com.emazon.stock.domain.puertos.in.CreateMarcaUseCase;
+import com.emazon.stock.domain.puertos.in.MarcaUseCases;
 import com.emazon.stock.domain.puertos.out.MarcaRepositoryPort;
+import com.emazon.stock.domain.util.PaginationCustom;
+import com.emazon.stock.domain.util.PaginationParams;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-
-@Component
 @RequiredArgsConstructor
-public class CreateMarcaUseCaseImpl implements CreateMarcaUseCase {
-
+public class MarcaUseCasesImpl implements MarcaUseCases {
     private final MarcaRepositoryPort marcaRepositoryPort;
 
 
     @Override
     public Marca saveMarca(Marca marca) {
-        //Validar que el nombre de la marca no este repetido
         validarNombreMarcaUnico(marca.getNombre());
 
         return marcaRepositoryPort.saveMarca(marca);
@@ -30,6 +27,11 @@ public class CreateMarcaUseCaseImpl implements CreateMarcaUseCase {
         if (marcaExistente.isPresent()) {
             throw new MarcaNombreDuplicadoException("El nombre de la marca ya existe: " + nombre);
         }
+    }
+
+    @Override
+    public PaginationCustom listMarcas(PaginationParams paginationParams) {
+        return marcaRepositoryPort.listMarcas(paginationParams);
     }
 
 

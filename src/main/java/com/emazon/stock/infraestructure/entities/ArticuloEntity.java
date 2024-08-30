@@ -2,15 +2,16 @@ package com.emazon.stock.infraestructure.entities;
 
 
 import com.emazon.stock.domain.model.Category;
+import com.github.javafaker.Cat;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "articulos")
@@ -32,12 +33,20 @@ public class ArticuloEntity {
     @Column(nullable = false)
     private double precio;
 
-    @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL)
-    private List<CategoryArticuloEntity> categoriesArticulos;
+    @ManyToMany
+    @JoinTable(
+            name = "articulo_categorias",
+            joinColumns = @JoinColumn(name = "id_articulo"),
+            inverseJoinColumns = @JoinColumn(name = "id_category")
+    )
+    private List<CategoryEntity> categories;
 
-    public List<CategoryArticuloEntity> getCategories() {
-        return this.categoriesArticulos;
-    }
+
+
+    @ManyToOne
+    @JoinColumn(name = "id_marca")
+    private MarcaEntity marca;
+
 
 
 }

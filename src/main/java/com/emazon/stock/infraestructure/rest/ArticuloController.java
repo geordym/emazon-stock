@@ -1,10 +1,11 @@
 package com.emazon.stock.infraestructure.rest;
 
 
-import com.emazon.stock.application.services.ArticuloService;
+import com.emazon.stock.application.implementations.ArticuloService;
 import com.emazon.stock.domain.model.Articulo;
 import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;
+import com.emazon.stock.infraestructure.enums.ArticleSortBy;
 import com.emazon.stock.infraestructure.mapper.ArticuloMapper;
 import com.emazon.stock.infraestructure.rest.dto.request.Articulo.CreateArticuloRequestDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.Articulo.ArticuloResponseDTO;
@@ -13,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,13 +62,23 @@ public class ArticuloController {
             @RequestParam(defaultValue = "10") int size,
             @ApiParam(
                     value = "Field by which the articles should be sorted",
-                    allowableValues = "id_articulo, nombre, descripcion, cantidad, precio",
-                    example = "nombre"
-            )            @RequestParam(defaultValue = "nombre") String sortBy,
+                    allowableValues = "name,mark,category",
+                    example = "name"
+            )
+            @RequestParam(defaultValue = "name") String sortBy,
             @ApiParam(value = "Sort direction (true for ascending, false for descending)",
                     allowableValues="true,false"
                     , example = "true")
             @RequestParam(defaultValue = "true") boolean ascending)  {
+
+        try {
+            ArticleSortBy sortByEnum = ArticleSortBy.fromValue(sortBy);
+            // Proceed with valid sortBy value
+        } catch (IllegalArgumentException e) {
+            // Handle invalid sortBy value (e.g., return a 400 Bad Request response)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
 
         // Llamar al servicio para obtener la lista de categorías
         PaginationCustom pagination = articuloService.
@@ -106,7 +118,7 @@ public class ArticuloController {
     })
     public ResponseEntity<CreateArticuloResponseDTO>
     saveArticulo(@RequestBody @ApiParam(value = "Data needed to create a new article", required = true)
-                 CreateArticuloRequestDTO createArticuloRequestDTO) {
+                @Valid CreateArticuloRequestDTO createArticuloRequestDTO) {
 
         return new ResponseEntity<>(
                 ArticuloMapper.domainToRequestCreateResponse(

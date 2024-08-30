@@ -32,6 +32,8 @@ public class MarcaRepositoryMySQLAdapter implements MarcaRepositoryPort {
                 paginationParams.getSize(),
                 paginationParams.isAscending() ? Sort.by(paginationParams.getSortBy()).ascending() : Sort.by(paginationParams.getSortBy()).descending()
         );
+        MarcaEntity marca = marcaCrudRepositoryMySQL.findById(1L).orElseThrow();
+
         Page<MarcaEntity> marcaPage = marcaCrudRepositoryMySQL.findAll(pageRequest);
         List<Marca> marcaList = marcaPage.getContent()
                 .stream()
@@ -59,6 +61,13 @@ public class MarcaRepositoryMySQLAdapter implements MarcaRepositoryPort {
     @Override
     public Optional<Marca> obtenerMarcaPorNombre(String nombre) {
         return MarcaMapper.dtoToDomain(marcaCrudRepositoryMySQL.findByNombre(nombre));
+    }
+
+    @Override
+    public Optional<Marca> obtenerMarcaPorId(Long idMarca) {
+        MarcaEntity marca = marcaCrudRepositoryMySQL.findById(idMarca).orElseThrow();
+        Optional<Marca> marcaOpt = MarcaMapper.dtoToDomain(marcaCrudRepositoryMySQL.findById(idMarca));
+        return marcaOpt;
     }
 
 }

@@ -6,6 +6,7 @@ import com.emazon.stock.infraestructure.entities.CategoryEntity;
 import com.emazon.stock.infraestructure.rest.dto.request.Categoria.CategoryCreateRequestDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.Categoria.CategoryResponseDTO;
 
+import java.util.List;
 import java.util.Optional;
 
 public class CategoryMapper {
@@ -57,5 +58,11 @@ public class CategoryMapper {
     }
 
 
+    public static List<CategoryEntity> domainListCategoriesToEntityList(List<Category> categories){
+        return categories.stream().map(categoryDomain -> CategoryMapper.domainToEntity(categoryDomain)).toList();
+    }
 
+    public static List<Category> entityListCategoriesToDomainList(List<CategoryEntity> categories){
+        return categories.stream().map(categoryEntity -> CategoryMapper.entityToDomain(categoryEntity)).toList();
+    }
 }

@@ -4,10 +4,14 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity
 @Table(name = "categories")
 public class CategoryEntity {
@@ -22,6 +26,10 @@ public class CategoryEntity {
 
     @Column(name = "description", nullable = false)
     private String description;
+
+    @ManyToMany(mappedBy = "categories")
+    private List<ArticuloEntity> articulos;
+
 
     public CategoryEntity(Long idCategory, String name, String description) {
         this.idCategory = idCategory;

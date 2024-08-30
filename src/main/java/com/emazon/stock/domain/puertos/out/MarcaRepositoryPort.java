@@ -14,5 +14,6 @@ public interface MarcaRepositoryPort {
 
     Optional<Marca> obtenerMarcaPorNombre(String nombre);
 
+    Optional<Marca> obtenerMarcaPorId(Long idMarca);
 
 }

@@ -1,6 +1,7 @@
 package com.emazon.stock.infraestructure.rest.dto.response.Articulo;
 
 
+import com.emazon.stock.domain.model.Marca;
 import com.emazon.stock.infraestructure.rest.dto.response.Categoria.CategoryResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,5 +20,7 @@ public class CreateArticuloResponseDTO {
     public Integer cantidad;
     public Double precio;
     public List<CategoryResponseDTO> categorias;
+    public Marca marca;
+
 
 }
