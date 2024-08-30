@@ -43,7 +43,7 @@ public class ArticuloEntity {
 
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_marca")
     private MarcaEntity marca;
 

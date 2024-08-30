@@ -9,6 +9,7 @@ import com.emazon.stock.domain.puertos.out.CategoryRepositoryPort;
 import com.emazon.stock.domain.puertos.out.MarcaRepositoryPort;
 import com.emazon.stock.domain.usecases.CategoryImpl.CategoryUseCasesImpl;
 import com.emazon.stock.domain.usecases.MarcaImpl.MarcaUseCasesImpl;
+import com.emazon.stock.domain.usecases.MarcaImpl.validators.MarcaValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,10 +19,9 @@ public class BeanMarcaConfiguration {
 
 
     @Bean
-    MarcaService marcaService(final MarcaRepositoryPort marcaRepositoryPort){
-        return new MarcaService(new MarcaUseCasesImpl(marcaRepositoryPort));
+    MarcaService marcaService(final MarcaRepositoryPort marcaRepositoryPort,  MarcaValidator marcaValidator){
+        return new MarcaService(new MarcaUseCasesImpl(marcaRepositoryPort, marcaValidator));
     }
-
 
 
 }

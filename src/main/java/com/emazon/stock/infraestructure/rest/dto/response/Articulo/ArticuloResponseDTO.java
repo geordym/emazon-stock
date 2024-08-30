@@ -2,6 +2,7 @@ package com.emazon.stock.infraestructure.rest.dto.response.Articulo;
 
 import com.emazon.stock.infraestructure.rest.dto.response.Categoria.CategoryResponseDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.Categoria.CategoryShortResponseDTO;
+import com.emazon.stock.infraestructure.rest.dto.response.Marca.MarcaShortResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,5 +20,6 @@ public class ArticuloResponseDTO {
     public Double precio;
 
     public List<CategoryShortResponseDTO> categorias;
+    public MarcaShortResponseDTO marca;
 
 }

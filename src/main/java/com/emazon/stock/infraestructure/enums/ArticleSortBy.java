@@ -4,7 +4,7 @@ package com.emazon.stock.infraestructure.enums;
 public enum ArticleSortBy {
     NAME("name", "nombre"),
     MARK("mark", "marca" ),
-    CATEGORY("category", "categoria");
+    CATEGORY("category", "categories.name");
 
     private final String value;
     private final String entityAttribute;
@@ -16,6 +16,10 @@ public enum ArticleSortBy {
 
     public String getValue() {
         return value;
+    }
+
+    public String toEntity() {
+        return entityAttribute;
     }
 
     public static ArticleSortBy fromValue(String value) {

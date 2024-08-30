@@ -4,6 +4,7 @@ import com.emazon.stock.domain.exception.CategoryDuplicatedNameException;
 import com.emazon.stock.domain.model.Category;
 import com.emazon.stock.domain.puertos.in.CategoryUseCases;
 import com.emazon.stock.domain.puertos.out.CategoryRepositoryPort;
+import com.emazon.stock.domain.usecases.CategoryImpl.validators.CategoryValidator;
 import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +15,11 @@ import java.util.Optional;
 public class CategoryUseCasesImpl implements CategoryUseCases {
 
     private final CategoryRepositoryPort categoryRepositoryPort;
+    private final CategoryValidator categoryValidator;
+
     @Override
     public Category saveCategory(Category category) {
-        validateCategoryNotDuplicated(category);
+        categoryValidator.saveCategoryValidate(category);
         return categoryRepositoryPort.saveCategory(category);
     }
 
@@ -26,11 +29,5 @@ public class CategoryUseCasesImpl implements CategoryUseCases {
     }
 
 
-    private void validateCategoryNotDuplicated(Category category) {
-        Optional<Category> existingCategory = categoryRepositoryPort.getCategoryByName(category.getName());
-        existingCategory.ifPresent(existing -> {
-            throw new CategoryDuplicatedNameException("The category name '" + category.getName() + "' is already registered.");
-        });
-    }
 
 }

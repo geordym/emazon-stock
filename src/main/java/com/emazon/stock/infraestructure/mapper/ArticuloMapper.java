@@ -70,7 +70,8 @@ public class ArticuloMapper {
                 articulo.getNombre(),
                 articulo.getDescripcion(), articulo.getCantidad(),
                 articulo.getPrecio(),
-                ArticuloMapper.listCategoriaArticuloDomainToArticuloShortResponseDTOList(articulo.getCategories())
+                ArticuloMapper.listCategoriaArticuloDomainToArticuloShortResponseDTOList(articulo.getCategories()),
+                MarcaMapper.marcaDomainToShortDto(articulo.getMarca())
         );
     }
 

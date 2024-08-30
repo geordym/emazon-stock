@@ -33,7 +33,7 @@ public class CategorySeeder implements CommandLineRunner {
         }
 
         for (Category category : categoriesToSave) {
-            iCategoryService.saveCategory(category);
+          //  iCategoryService.saveCategory(category);
         }
 
     }

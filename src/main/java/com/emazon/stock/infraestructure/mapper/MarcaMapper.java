@@ -4,6 +4,7 @@ import com.emazon.stock.domain.model.Marca;
 import com.emazon.stock.infraestructure.entities.MarcaEntity;
 import com.emazon.stock.infraestructure.rest.dto.request.Marca.MarcaCreateRequestDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.Marca.MarcaCreateResponseDTO;
+import com.emazon.stock.infraestructure.rest.dto.response.Marca.MarcaShortResponseDTO;
 
 import java.util.Optional;
 
@@ -26,6 +27,10 @@ public class MarcaMapper {
 
     public static Marca entityToDomain(MarcaEntity marca){
         return new Marca(marca.getIdMarca(), marca.getNombre(), marca.getDescripcion());
+    }
+
+    public static MarcaShortResponseDTO marcaDomainToShortDto(Marca marca){
+        return new MarcaShortResponseDTO(marca.getId(),marca.getNombre());
     }
 
 

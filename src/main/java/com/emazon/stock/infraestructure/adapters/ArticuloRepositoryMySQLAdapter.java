@@ -61,7 +61,7 @@ public class ArticuloRepositoryMySQLAdapter implements ArticuloRepositoryPort {
         PageRequest pageRequest = PageRequest.of(
                 paginationParams.getPage(),
                 paginationParams.getSize(),
-                paginationParams.isAscending() ? Sort.by(paginationParams.getSortBy()).ascending() : Sort.by(sortBy.getValue()).descending()
+                paginationParams.isAscending() ? Sort.by(sortBy.toEntity()).ascending() : Sort.by(sortBy.toEntity()).descending()
         );
 
 
