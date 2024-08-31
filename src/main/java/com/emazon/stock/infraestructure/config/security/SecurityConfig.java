@@ -1,12 +1,13 @@
 package com.emazon.stock.infraestructure.config.security;
 
 
-import com.emazon.user.infraestructure.enums.RoleEnum;
+import com.emazon.stock.infraestructure.enums.RoleEnum;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -37,10 +38,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(registry -> {
-                    registry.requestMatchers("/api/users").hasAuthority(RoleEnum.ADMINISTRADOR.getName().toString());
-                    registry.requestMatchers("/api/users/**").authenticated();
+                    registry.requestMatchers("/api/marcas").hasAuthority(RoleEnum.ADMINISTRADOR.getName());
+                    registry.requestMatchers("/api/categories").hasAuthority(RoleEnum.ADMINISTRADOR.getName());
+                    registry.requestMatchers("/api/articulos").hasAuthority(RoleEnum.ADMINISTRADOR.getName());
 
-                    registry.requestMatchers("/api/authenticate").permitAll();
                 })
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
@@ -94,4 +95,6 @@ public class SecurityConfig {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .build();
     }
+
+
 }
