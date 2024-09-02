@@ -33,6 +33,7 @@ public class ArticuloController {
     private final ArticuloService articuloService;
 
 
+
     @ApiOperation(value = "Get a list of articles",    notes = """
             This endpoint allows you to fetch a paginated list of articles available in the system.
             You can customize the response by specifying the page number, page size, sorting field, 

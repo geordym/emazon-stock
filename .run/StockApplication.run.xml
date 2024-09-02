@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="StockApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+    <envs>
+      <env name="API_USER" value="http://localhost:8080/" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="com.emazon.stock.StockApplication" />
+    <module name="stock.main" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.emazon.stock.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
