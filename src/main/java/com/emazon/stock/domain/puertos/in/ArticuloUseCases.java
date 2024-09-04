@@ -13,4 +13,6 @@ public interface ArticuloUseCases {
 
     Optional<Articulo> findArticleById(Long articleId);
 
+    void updateArticleStock(Long articleId, int quantity);
+
 }

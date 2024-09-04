@@ -1,11 +1,14 @@
 package com.emazon.stock.domain.model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class Articulo {
 
     private Long idArticulo;

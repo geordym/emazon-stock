@@ -40,6 +40,11 @@ public class ArticuloUseCasesImpl implements ArticuloUseCases {
     }
 
     @Override
+    public void updateArticleStock(Long articleId, int quantity) {
+        articuloRepositoryPort.updateArticleStock(articleId, quantity);
+    }
+
+    @Override
     public Articulo saveArticulo(Articulo articulo) {
         articuloValidator.saveArticleValidate(articulo);
         return articuloRepositoryPort.saveArticulo(articulo);

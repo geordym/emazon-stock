@@ -41,6 +41,7 @@ public class SecurityConfig {
                     registry.requestMatchers("/api/marcas").hasAuthority(RoleEnum.ADMINISTRADOR.getName());
                     registry.requestMatchers("/api/categories").hasAuthority(RoleEnum.ADMINISTRADOR.getName());
                     registry.requestMatchers("/api/articulos").hasAuthority(RoleEnum.ADMINISTRADOR.getName());
+                    registry.requestMatchers("/api/articulos/stock").permitAll();
                     registry.requestMatchers("/api/articulos/**").permitAll();
 
                 })

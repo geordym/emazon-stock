@@ -28,10 +28,10 @@ public class ArticuloEntity {
     private String descripcion;
 
     @Column(nullable = false)
-    private int cantidad;
+    private Integer cantidad;
 
     @Column(nullable = false)
-    private double precio;
+    private Double precio;
 
     @ManyToMany
     @JoinTable(

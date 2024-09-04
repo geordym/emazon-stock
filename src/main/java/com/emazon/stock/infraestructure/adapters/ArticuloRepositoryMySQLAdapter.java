@@ -12,6 +12,7 @@ import com.emazon.stock.infraestructure.enums.ArticleSortBy;
 import com.emazon.stock.infraestructure.mapper.ArticuloMapper;
 import com.emazon.stock.infraestructure.mapper.CategoryMapper;
 import com.emazon.stock.infraestructure.repositories.ArticuloCrudRepositoryMySQL;
+import io.swagger.models.auth.In;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -32,11 +33,6 @@ public class ArticuloRepositoryMySQLAdapter implements ArticuloRepositoryPort {
 
 
     private final ArticuloCrudRepositoryMySQL articuloCrudRepositoryMySQL;
-
-    private final CategoryRepositoryPort categoryRepositoryPort;
-
-    private final MarcaRepositoryPort marcaRepositoryPort;
-
 
     @Autowired
     private EntityManager entityManager;
@@ -93,6 +89,12 @@ public class ArticuloRepositoryMySQLAdapter implements ArticuloRepositoryPort {
         }
 
         return Optional.of(ArticuloMapper.entityToDomain(articuloEntityOptional.get()));
+    }
+
+    @Transactional
+    @Override
+    public void updateArticleStock(Long articleId, Integer quantity) {
+        articuloCrudRepositoryMySQL.updateArticleStock(articleId, quantity);
     }
 
 

@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static com.emazon.stock.infraestructure.rest.constants.ResponseConstants.ARTICLE_UPDATE_STOCK_MESSAGE;
+
 
 @RestController
 @RequestMapping("/api/articulos")
@@ -142,6 +144,11 @@ public class ArticuloController {
                 HttpStatus.OK);
     }
 
-
+    @PutMapping("/stock")
+    public ResponseEntity<GenericResponseDto> updateArticleStock(@RequestBody UpdateArticleStockRequestDto updateArticleStockRequestDto){
+        articuloService.updateArticleStock(updateArticleStockRequestDto);
+        GenericResponseDto genericResponseDto = new GenericResponseDto(ARTICLE_UPDATE_STOCK_MESSAGE);
+        return new ResponseEntity<>(genericResponseDto, HttpStatus.OK);
+    }
 
 }

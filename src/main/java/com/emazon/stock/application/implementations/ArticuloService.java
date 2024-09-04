@@ -5,6 +5,7 @@ import com.emazon.stock.domain.model.Articulo;
 import com.emazon.stock.domain.puertos.in.ArticuloUseCases;
 import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;
+import com.emazon.stock.infraestructure.rest.dto.request.Articulo.UpdateArticleStockRequestDto;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
@@ -30,6 +31,14 @@ public class ArticuloService implements IArticuloService {
     public Optional<Articulo> findArticleById(Long articleId) {
         return articuloUseCases.findArticleById(articleId);
     }
+
+    @Override
+    public void updateArticleStock(UpdateArticleStockRequestDto updateArticleStockRequestDto) {
+        Long articleId = updateArticleStockRequestDto.getArticleId();
+        Integer quantity = updateArticleStockRequestDto.getQuantity();
+        articuloUseCases.updateArticleStock(articleId, quantity);
+    }
+
 
 
 }
