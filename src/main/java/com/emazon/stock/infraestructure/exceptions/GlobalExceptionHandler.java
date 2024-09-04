@@ -15,6 +15,14 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(ArticuloNoEncontradoException.class)
+    public ResponseEntity<String> handleArticuloNoEncontradoException(ArticuloNoEncontradoException e) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(e.getMessage());
+    }
+
+
     @ExceptionHandler(CategoryDuplicatedNameException.class)
     public ResponseEntity<String> handleCategoryDuplicatedNameException(CategoryDuplicatedNameException e) {
         return ResponseEntity

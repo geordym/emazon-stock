@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static com.emazon.stock.domain.util.Constantes.ARTICULO_MAXIMO_CATEGORIAS;
@@ -32,6 +33,12 @@ public class ArticuloUseCasesImpl implements ArticuloUseCases {
     public PaginationCustom listArticles(PaginationParams paginationParams) {
         return articuloRepositoryPort.listArticles(paginationParams);
     }
+
+    @Override
+    public Optional<Articulo> findArticleById(Long articleId) {
+        return articuloRepositoryPort.findArticleById(articleId);
+    }
+
     @Override
     public Articulo saveArticulo(Articulo articulo) {
         articuloValidator.saveArticleValidate(articulo);

@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
@@ -81,6 +82,17 @@ public class ArticuloRepositoryMySQLAdapter implements ArticuloRepositoryPort {
                 articuloPage.isLast()
         );
         return pagination;
+    }
+
+    @Override
+    public Optional<Articulo> findArticleById(Long articleId) {
+        Optional<ArticuloEntity> articuloEntityOptional = articuloCrudRepositoryMySQL.findById(articleId);
+        if(articuloEntityOptional.isEmpty()){
+            return Optional.empty();
+
+        }
+
+        return Optional.of(ArticuloMapper.entityToDomain(articuloEntityOptional.get()));
     }
 
 

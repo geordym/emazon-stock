@@ -2,14 +2,17 @@ package com.emazon.stock.infraestructure.rest;
 
 
 import com.emazon.stock.application.implementations.ArticuloService;
+import com.emazon.stock.domain.exception.ArticuloNoEncontradoException;
 import com.emazon.stock.domain.model.Articulo;
 import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;
 import com.emazon.stock.infraestructure.enums.ArticleSortBy;
 import com.emazon.stock.infraestructure.mapper.ArticuloMapper;
 import com.emazon.stock.infraestructure.rest.dto.request.Articulo.CreateArticuloRequestDTO;
+import com.emazon.stock.infraestructure.rest.dto.request.Articulo.UpdateArticleStockRequestDto;
 import com.emazon.stock.infraestructure.rest.dto.response.Articulo.ArticuloResponseDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.Articulo.CreateArticuloResponseDTO;
+import com.emazon.stock.infraestructure.rest.dto.response.GenericResponseDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -22,6 +25,7 @@ import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -32,6 +36,16 @@ public class ArticuloController {
 
     private final ArticuloService articuloService;
 
+    @GetMapping("/{articleId}")
+    public ResponseEntity<ArticuloResponseDTO> getArticleById(@PathVariable("articleId") Long articleId){
+
+        Optional<Articulo> articuloOptional = articuloService.findArticleById(articleId);
+        if(articuloOptional.isEmpty()){
+            throw new ArticuloNoEncontradoException("Article with id:" + articleId + "Has been not found");
+        }
+
+        return new ResponseEntity<>(ArticuloMapper.domainToDto(articuloOptional.get()), HttpStatus.OK);
+    }
 
 
     @ApiOperation(value = "Get a list of articles",    notes = """
@@ -128,6 +142,9 @@ public class ArticuloController {
                 HttpStatus.OK);
     }
 
+    @PutMapping("/stock")
+    public ResponseEntity<GenericResponseDto> updateArticleStock(@RequestBody UpdateArticleStockRequestDto updateArticleStockRequestDto){
 
+    }
 
 }

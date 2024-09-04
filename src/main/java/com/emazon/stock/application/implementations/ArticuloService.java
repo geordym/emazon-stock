@@ -7,6 +7,8 @@ import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 public class ArticuloService implements IArticuloService {
 
@@ -22,6 +24,11 @@ public class ArticuloService implements IArticuloService {
     @Override
     public PaginationCustom listArticles(PaginationParams paginationParams) {
         return articuloUseCases.listArticles(paginationParams);
+    }
+
+    @Override
+    public Optional<Articulo> findArticleById(Long articleId) {
+        return articuloUseCases.findArticleById(articleId);
     }
 
 
