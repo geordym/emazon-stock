@@ -36,7 +36,8 @@ public class ArticuloService implements IArticuloService {
     public void updateArticleStock(UpdateArticleStockRequestDto updateArticleStockRequestDto) {
         Long articleId = updateArticleStockRequestDto.getArticleId();
         Integer quantity = updateArticleStockRequestDto.getQuantity();
-        articuloUseCases.updateArticleStock(articleId, quantity);
+        Long supplyId = updateArticleStockRequestDto.getSupplyId();
+        articuloUseCases.updateArticleStock(supplyId, articleId, quantity);
     }
 
 

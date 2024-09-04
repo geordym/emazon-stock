@@ -7,6 +7,7 @@ import com.emazon.stock.domain.model.Articulo;
 import com.emazon.stock.domain.model.Category;
 import com.emazon.stock.domain.puertos.in.ArticuloUseCases;
 import com.emazon.stock.domain.puertos.out.ArticuloRepositoryPort;
+import com.emazon.stock.domain.puertos.out.SupplyServicePort;
 import com.emazon.stock.domain.usecases.ArticuloImpl.validators.ArticuloValidator;
 import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;
@@ -17,6 +18,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static com.emazon.stock.domain.util.Constantes.ARTICULO_MAXIMO_CATEGORIAS;
 import static com.emazon.stock.domain.util.Constantes.ARTICULO_MINIMO_CATEGORIAS;
@@ -25,9 +28,10 @@ import static com.emazon.stock.domain.util.Constantes.ARTICULO_MINIMO_CATEGORIAS
 @RequiredArgsConstructor
 public class ArticuloUseCasesImpl implements ArticuloUseCases {
 
-
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final ArticuloRepositoryPort articuloRepositoryPort;
     private final ArticuloValidator articuloValidator;
+    private final SupplyServicePort supplyServicePort;
 
     @Override
     public PaginationCustom listArticles(PaginationParams paginationParams) {
@@ -40,8 +44,12 @@ public class ArticuloUseCasesImpl implements ArticuloUseCases {
     }
 
     @Override
-    public void updateArticleStock(Long articleId, int quantity) {
+    public void updateArticleStock(Long supplyId, Long articleId, int quantity) {
         articuloRepositoryPort.updateArticleStock(articleId, quantity);
+        //supplyServicePort.communicateSupplyReceived(supplyId);
+        executorService.submit(() -> {
+            supplyServicePort.communicateSupplyReceived(supplyId);
+        });
     }
 
     @Override
