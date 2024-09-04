@@ -142,9 +142,6 @@ public class ArticuloController {
                 HttpStatus.OK);
     }
 
-    @PutMapping("/stock")
-    public ResponseEntity<GenericResponseDto> updateArticleStock(@RequestBody UpdateArticleStockRequestDto updateArticleStockRequestDto){
 
-    }
 
 }
