@@ -38,9 +38,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(registry -> {
-                    registry.requestMatchers("/api/marcas").hasAuthority(RoleEnum.ADMINISTRADOR.getName());
-                    registry.requestMatchers("/api/categories").hasAuthority(RoleEnum.ADMINISTRADOR.getName());
-                    registry.requestMatchers("/api/articulos").hasAuthority(RoleEnum.ADMINISTRADOR.getName());
+                    registry.requestMatchers("/api/marcas").hasRole(RoleEnum.ADMINISTRADOR.getName());
+                    registry.requestMatchers("/api/categories").hasRole(RoleEnum.ADMINISTRADOR.getName());
+                    registry.requestMatchers("/api/articulos").hasRole(RoleEnum.ADMINISTRADOR.getName());
                     registry.requestMatchers("/api/articulos/stock").permitAll();
                     registry.requestMatchers("/api/articulos/**").permitAll();
 

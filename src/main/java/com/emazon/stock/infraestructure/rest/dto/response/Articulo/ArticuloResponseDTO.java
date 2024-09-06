@@ -1,6 +1,5 @@
 package com.emazon.stock.infraestructure.rest.dto.response.Articulo;
 
-import com.emazon.stock.infraestructure.rest.dto.response.Categoria.CategoryResponseDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.Categoria.CategoryShortResponseDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.Marca.MarcaShortResponseDTO;
 import lombok.AllArgsConstructor;

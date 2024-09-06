@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum RoleEnum {
-    AUX_BODEGA(1L, "AUX_BODEGA"),
+    AUX_BODEGA(1L, "WAREHOUSE_ASSISTANT"),
     CLIENTE(2L, "CLIENT"),
     ADMINISTRADOR(3L, "ADMINISTRATOR");
 

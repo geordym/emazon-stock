@@ -5,13 +5,11 @@ import com.emazon.stock.domain.model.Articulo;
 import com.emazon.stock.domain.model.Category;
 import com.emazon.stock.domain.model.Marca;
 import com.emazon.stock.infraestructure.entities.ArticuloEntity;
-import com.emazon.stock.infraestructure.entities.CategoryEntity;
 import com.emazon.stock.infraestructure.rest.dto.request.Articulo.CreateArticuloRequestDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.Articulo.ArticuloResponseDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.Articulo.CreateArticuloResponseDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.Categoria.CategoryResponseDTO;
 import com.emazon.stock.infraestructure.rest.dto.response.Categoria.CategoryShortResponseDTO;
-import com.github.javafaker.Cat;
 
 
 import java.util.Arrays;

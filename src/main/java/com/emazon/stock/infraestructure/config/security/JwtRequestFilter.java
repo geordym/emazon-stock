@@ -1,30 +1,49 @@
 package com.emazon.stock.infraestructure.config.security;
 
 
+import com.emazon.stock.domain.puertos.out.security.TokenProviderPort;
+import com.emazon.stock.infraestructure.rest.dto.response.security.ErrorGenericResponseDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Component
+@RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private MyUserDetailsService userDetailsService;
 
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final UserDetailsService userDetailsService;
+    private final TokenProviderPort tokenProviderPort;
+    private final ObjectMapper objectMapper;
+
+    private final String ERROR_HEADER_RESPONSE = "Authentication Error";
+    private final String TOKEN_EXPIRED_MESSAGE = "Token expired";
+    private final String INVALID_CREDENTIALS_MESSAGE = "Invalid credentials";
+
+
+    private final ErrorGenericResponseDto tokenExpiredResponse =
+            new ErrorGenericResponseDto(ERROR_HEADER_RESPONSE,
+                    TOKEN_EXPIRED_MESSAGE, LocalDateTime.now().toString());
+
+
+    private final ErrorGenericResponseDto invalidCredentialsError =
+            new ErrorGenericResponseDto(ERROR_HEADER_RESPONSE,
+                    INVALID_CREDENTIALS_MESSAGE, LocalDateTime.now().toString());
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -32,43 +51,61 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         final String authorizationHeader = request.getHeader("Authorization");
 
-        String username = null;
+        String subject = null;
         String jwt = null;
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
             try {
-                username = jwtUtil.extractUsername(jwt);
+                subject = tokenProviderPort.extractSubject(jwt);
             } catch (ExpiredJwtException e) {
-                String isRefreshToken = request.getHeader("isRefreshToken");
-                String requestURL = request.getRequestURL().toString();
-                // Allow for Refresh Token creation if following conditions are true.
-                if (isRefreshToken != null && isRefreshToken.equals("true") && requestURL.contains("refreshtoken")) {
-                    allowForRefreshToken(e, request);
+                String json = objectMapper.writeValueAsString(tokenExpiredResponse);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write(json);
+                return;
+            } catch (JwtException jwtException){
+                String json = objectMapper.writeValueAsString(invalidCredentialsError);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write(json);
+                return;
+            }
+        }
+
+        if (subject != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+            try{
+                CustomUserDetails userDetails = (CustomUserDetails) this.userDetailsService.loadUserByUsername(jwt);
+                if (tokenProviderPort.validateToken(jwt, subject)) {
+                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                            new UsernamePasswordAuthenticationToken(
+                            userDetails, jwt, userDetails.getAuthorities());
+
+                    usernamePasswordAuthenticationToken
+                            .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                    createSecurityContext(usernamePasswordAuthenticationToken);
                 }
+            }catch (UsernameNotFoundException u ){
+                String json = objectMapper.writeValueAsString(invalidCredentialsError);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write(json);
+                return;
             }
-        }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(jwt);
-            if (jwtUtil.validateToken(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken
-                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            }
         }
-
 
         chain.doFilter(request, response);
     }
 
-    private void allowForRefreshToken(ExpiredJwtException ex, HttpServletRequest request) {
-        // Set necessary context for creating new refresh token
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                null, null, null);
+    private static void createSecurityContext(UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-        request.setAttribute("claims", ex.getClaims());
     }
+
+
 }

@@ -1,45 +1,38 @@
 package com.emazon.stock.infraestructure.config.security;
 
 
-
-import com.emazon.stock.domain.model.User;
-import com.emazon.stock.domain.puertos.out.UserRepositoryPort;
+import com.emazon.stock.domain.puertos.out.security.TokenProviderPort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.Arrays;
+import java.util.Collection;
 
 
 @Service
 @RequiredArgsConstructor
 public class MyUserDetailsService implements UserDetailsService {
 
-    private final UserRepositoryPort userRepositoryPort;
-
+    private final TokenProviderPort tokenProviderPort;
+    private final String USERNAME_NOT_FOUND_MESSAGE = "The username has been not found";
     @Override
-    public UserDetails loadUserByUsername(String token) throws UsernameNotFoundException {
-        Optional<User> user = userRepositoryPort.findUserByToken("Bearer " + token);
+    public UserDetails loadUserByUsername(String token){
+        String subject = tokenProviderPort.extractSubject(token);
+        String role = tokenProviderPort.extractRole(token);
 
-        if (user.isPresent()) {
-            User userObj = user.get();
-            UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
-                    .username(userObj.getEmail())
-                    .password(userObj.getPassword())
-                    .authorities(userObj.getRole().getName())
-                    .accountExpired(false)
-                    .accountLocked(false)
-                    .credentialsExpired(false)
-                    .disabled(false)
-                    .build();
-
+        if (subject != null && !subject.isEmpty()) {
+            Collection<GrantedAuthority> authorities = Arrays.asList(
+                    new SimpleGrantedAuthority(role)
+            );
+            CustomUserDetails userDetails = new CustomUserDetails(subject, token, authorities, true);
             return userDetails;
         } else {
-            throw new UsernameNotFoundException(token);
+            throw new UsernameNotFoundException(USERNAME_NOT_FOUND_MESSAGE);
         }
     }
-
-
 }
