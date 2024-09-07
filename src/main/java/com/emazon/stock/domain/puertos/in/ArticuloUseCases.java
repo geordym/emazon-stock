@@ -13,6 +13,6 @@ public interface ArticuloUseCases {
 
     Optional<Articulo> findArticleById(Long articleId);
 
-    void updateArticleStock(Long supplyId, Long articleId, int quantity);
+    void updateArticleStock(Long supplyId, Long articleId, int quantity) throws InterruptedException;
 
 }

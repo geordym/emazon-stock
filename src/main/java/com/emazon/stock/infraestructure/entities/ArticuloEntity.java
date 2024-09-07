@@ -42,7 +42,6 @@ public class ArticuloEntity {
     private List<CategoryEntity> categories;
 
 
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_marca")
     private MarcaEntity marca;

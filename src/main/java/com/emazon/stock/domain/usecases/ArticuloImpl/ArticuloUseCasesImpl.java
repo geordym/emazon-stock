@@ -28,7 +28,6 @@ import static com.emazon.stock.domain.util.Constantes.ARTICULO_MINIMO_CATEGORIAS
 @RequiredArgsConstructor
 public class ArticuloUseCasesImpl implements ArticuloUseCases {
 
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final ArticuloRepositoryPort articuloRepositoryPort;
     private final ArticuloValidator articuloValidator;
     private final SupplyServicePort supplyServicePort;
@@ -44,12 +43,9 @@ public class ArticuloUseCasesImpl implements ArticuloUseCases {
     }
 
     @Override
-    public void updateArticleStock(Long supplyId, Long articleId, int quantity) {
+    public void updateArticleStock(Long supplyId, Long articleId, int quantity) throws InterruptedException {
         articuloRepositoryPort.updateArticleStock(articleId, quantity);
-        //supplyServicePort.communicateSupplyReceived(supplyId);
-        executorService.submit(() -> {
-            supplyServicePort.communicateSupplyReceived(supplyId);
-        });
+        supplyServicePort.communicateSupplyReceived(supplyId);
     }
 
     @Override

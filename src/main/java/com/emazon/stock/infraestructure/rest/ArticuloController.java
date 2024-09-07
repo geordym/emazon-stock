@@ -145,7 +145,7 @@ public class ArticuloController {
     }
 
     @PutMapping("/stock")
-    public ResponseEntity<GenericResponseDto> updateArticleStock(@RequestBody UpdateArticleStockRequestDto updateArticleStockRequestDto){
+    public ResponseEntity<GenericResponseDto> updateArticleStock(@RequestBody UpdateArticleStockRequestDto updateArticleStockRequestDto) throws InterruptedException {
         articuloService.updateArticleStock(updateArticleStockRequestDto);
         GenericResponseDto genericResponseDto = new GenericResponseDto(ARTICLE_UPDATE_STOCK_MESSAGE);
         return new ResponseEntity<>(genericResponseDto, HttpStatus.OK);

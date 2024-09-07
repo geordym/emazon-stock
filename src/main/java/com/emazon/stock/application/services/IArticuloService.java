@@ -11,5 +11,5 @@ public interface IArticuloService {
     Articulo saveArticulo(Articulo articulo);
     PaginationCustom listArticles(PaginationParams paginationParams);
     Optional<Articulo> findArticleById(Long articleId);
-    void updateArticleStock(UpdateArticleStockRequestDto updateArticleStockRequestDto);
+    void updateArticleStock(UpdateArticleStockRequestDto updateArticleStockRequestDto) throws InterruptedException;
 }

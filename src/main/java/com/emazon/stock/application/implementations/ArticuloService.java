@@ -33,7 +33,7 @@ public class ArticuloService implements IArticuloService {
     }
 
     @Override
-    public void updateArticleStock(UpdateArticleStockRequestDto updateArticleStockRequestDto) {
+    public void updateArticleStock(UpdateArticleStockRequestDto updateArticleStockRequestDto) throws InterruptedException {
         Long articleId = updateArticleStockRequestDto.getArticleId();
         Integer quantity = updateArticleStockRequestDto.getQuantity();
         Long supplyId = updateArticleStockRequestDto.getSupplyId();
