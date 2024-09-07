@@ -20,15 +20,7 @@ public class JwtIOTokenAdapter implements TokenProviderPort {
     private String SECRET_KEY;
 
 
-    @Override
-    public String generateAccessToken(LocalDateTime issuedAt, String subject, LocalDateTime expirationAt, Map<String, Object> claims) {
-        return createAccessToken(claims, subject, issuedAt, expirationAt);
-    }
 
-    @Override
-    public String generateRefreshToken(LocalDateTime issuedAt, String subject, LocalDateTime expirationAt) {
-        return createRefreshToken(subject, issuedAt, expirationAt);
-    }
 
     @Override
     public Boolean validateToken(String token, String username) {
@@ -63,10 +55,7 @@ public class JwtIOTokenAdapter implements TokenProviderPort {
         return claims.get(claimKey);
     }
 
-    @Override
-    public String extractUsername(String token) {
-        return (String) extractClaim(token, CLAIM_KEY_USERNAME);
-    }
+
 
     @Override
     public String extractSubject(String token) {

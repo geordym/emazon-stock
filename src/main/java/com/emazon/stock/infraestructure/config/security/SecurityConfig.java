@@ -43,7 +43,6 @@ public class SecurityConfig {
                     registry.requestMatchers("/api/articulos").hasRole(RoleEnum.ADMINISTRADOR.getName());
                     registry.requestMatchers("/api/articulos/stock").permitAll();
                     registry.requestMatchers("/api/articulos/**").permitAll();
-
                 })
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

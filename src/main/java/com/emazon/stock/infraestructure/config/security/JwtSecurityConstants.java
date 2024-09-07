@@ -1,7 +1,9 @@
 package com.emazon.stock.infraestructure.config.security;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class JwtSecurityConstants {
-    public static String SECRET_KEY = "3nKAe0ytwn6XSOf/7mI7mmyiRrdVvcl4YVy9kG6ChaI=";
+
     public static final String CLAIM_SUBJECT_KEY = "sub";
     public static final String CLAIM_EXPIRATION_KEY = "exp";
     public static final String CLAIM_EXPEDITION_KEY = "iat";
