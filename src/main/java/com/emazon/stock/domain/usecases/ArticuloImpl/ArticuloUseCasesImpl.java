@@ -5,8 +5,10 @@ import com.emazon.stock.domain.exception.ArticuloConExcesoCategoriasException;
 import com.emazon.stock.domain.exception.ArticuloConFaltaDeCategoriasException;
 import com.emazon.stock.domain.model.Articulo;
 import com.emazon.stock.domain.model.Category;
+import com.emazon.stock.domain.model.SupplyLog;
 import com.emazon.stock.domain.puertos.in.ArticuloUseCases;
 import com.emazon.stock.domain.puertos.out.ArticuloRepositoryPort;
+import com.emazon.stock.domain.puertos.out.SupplyLogPersistencePort;
 import com.emazon.stock.domain.puertos.out.SupplyServicePort;
 import com.emazon.stock.domain.usecases.ArticuloImpl.validators.ArticuloValidator;
 import com.emazon.stock.domain.util.PaginationCustom;
@@ -14,6 +16,7 @@ import com.emazon.stock.domain.util.PaginationParams;
 import com.github.javafaker.Cat;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +34,10 @@ public class ArticuloUseCasesImpl implements ArticuloUseCases {
     private final ArticuloRepositoryPort articuloRepositoryPort;
     private final ArticuloValidator articuloValidator;
     private final SupplyServicePort supplyServicePort;
+    private final SupplyLogPersistencePort supplyLogPersistencePort;
+
+    private final String SUPPLY_LOG_STATUS_ON_RECEIVED= "PENDING";
+    private final String SUPPLY_LOG_STATUS_ON_CONFIRMED = "CONFIRMED";
 
     @Override
     public PaginationCustom listArticles(PaginationParams paginationParams) {
@@ -44,8 +51,24 @@ public class ArticuloUseCasesImpl implements ArticuloUseCases {
 
     @Override
     public void updateArticleStock(Long supplyId, Long articleId, int quantity) throws InterruptedException {
-        articuloRepositoryPort.updateArticleStock(articleId, quantity);
+        Optional<SupplyLog> supplyLogOpt = supplyLogPersistencePort.findSupplyLogBySupplyId(supplyId);
+
+        if (supplyLogOpt.isEmpty()) {
+            articuloRepositoryPort.updateArticleStock(articleId, quantity);
+            SupplyLog supplyLog = createSupplyLog(supplyId, articleId);
+            supplyLogPersistencePort.createSupplyLog(supplyLog);
+        }
+
         supplyServicePort.communicateSupplyReceived(supplyId);
+    }
+
+    private SupplyLog createSupplyLog(Long supplyId, Long articleId){
+        SupplyLog supplyLog = new SupplyLog();
+        supplyLog.setSupplyId(supplyId);
+        supplyLog.setArticle(new Articulo(articleId));
+        supplyLog.setStatus(SUPPLY_LOG_STATUS_ON_RECEIVED);
+        supplyLog.setReceivedAt(LocalDateTime.now());
+        return supplyLog;
     }
 
     @Override

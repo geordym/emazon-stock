@@ -76,16 +76,40 @@ public class ArticuloMapper {
 
 
 
-    public static ArticuloEntity domainToEntity(Articulo articulo){
+    public static ArticuloEntity domainToEntity(Articulo articulo) {
+        ArticuloEntity articuloEntity = new ArticuloEntity();
 
-        return new ArticuloEntity(articulo.getIdArticulo(),
-                articulo.getNombre(), articulo.getDescripcion(),
-                articulo.getCantidad(),
-                articulo.getPrecio(),
-                CategoryMapper.domainListCategoriesToEntityList(articulo.getCategories()),
-                MarcaMapper.domainToEntity(articulo.getMarca())
-        );
+        if (articulo.getIdArticulo() != null) {
+            articuloEntity.setIdArticulo(articulo.getIdArticulo());
+        }
+
+        if (articulo.getNombre() != null) {
+            articuloEntity.setNombre(articulo.getNombre());
+        }
+
+        if (articulo.getDescripcion() != null) {
+            articuloEntity.setDescripcion(articulo.getDescripcion());
+        }
+
+        if (articulo.getCantidad() != null) {
+            articuloEntity.setCantidad(articulo.getCantidad());
+        }
+
+        if (articulo.getPrecio() != null) {
+            articuloEntity.setPrecio(articulo.getPrecio());
+        }
+
+        if (articulo.getCategories() != null) {
+            articuloEntity.setCategories(CategoryMapper.domainListCategoriesToEntityList(articulo.getCategories()));
+        }
+
+        if (articulo.getMarca() != null) {
+            articuloEntity.setMarca(MarcaMapper.domainToEntity(articulo.getMarca()));
+        }
+
+        return articuloEntity;
     }
+
 
     public static Articulo entityToDomain(ArticuloEntity articulo){
         return new Articulo(articulo.getIdArticulo(),

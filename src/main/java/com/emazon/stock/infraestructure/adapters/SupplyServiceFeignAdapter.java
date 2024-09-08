@@ -1,5 +1,6 @@
 package com.emazon.stock.infraestructure.adapters;
 
+import com.emazon.stock.domain.model.SupplyLog;
 import com.emazon.stock.domain.puertos.out.SupplyServicePort;
 import com.emazon.stock.infraestructure.client.SupplyFeignClient;
 import com.emazon.stock.infraestructure.client.dto.GenericResponseDto;
@@ -28,5 +29,7 @@ public class SupplyServiceFeignAdapter implements SupplyServicePort {
 
 
     }
+
+
 
 }

@@ -14,11 +14,14 @@ public class Articulo {
     private Long idArticulo;
     private String nombre;
     private String descripcion;
-    private int cantidad;
-    private double precio;
+    private Integer cantidad;
+    private Double precio;
     private List<Category> categories;
     private Marca marca;
 
+    public Articulo(Long idArticulo) {
+        this.idArticulo = idArticulo;
+    }
 
     public Articulo(String nombre, String descripcion, int cantidad, double precio, List<Category> categories, Marca marca) {
         this.nombre = nombre;

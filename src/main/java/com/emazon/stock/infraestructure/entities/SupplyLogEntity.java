@@ -2,12 +2,10 @@ package com.emazon.stock.infraestructure.entities;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SupplyLog {
+public class SupplyLogEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +24,7 @@ public class SupplyLog {
     @JoinColumn(name = "article_id")
     private ArticuloEntity article;
 
-    @Column(name = "supply_id")
+    @Column(name = "supply_id", unique = true)
     private Long supplyId;
 
     @Column(name = "received_at")
