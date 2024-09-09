@@ -1,6 +1,7 @@
 package com.emazon.stock.infraestructure.repositories;
 
 import com.emazon.stock.infraestructure.entities.ArticuloEntity;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +17,6 @@ public interface ArticuloCrudRepositoryMySQL extends JpaRepository<ArticuloEntit
 
     @Modifying
     @Query("UPDATE ArticuloEntity a SET a.cantidad = a.cantidad + :quantity WHERE a.idArticulo = :articleId")
-    void updateArticleStock(Long articleId, Integer quantity);
+    void updateArticleStock(Long articleId, Integer quantity) throws DataAccessException;
 
 }

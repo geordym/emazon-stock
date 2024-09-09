@@ -16,5 +16,7 @@ public interface SupplyFeignClient {
     @PutMapping(value = "/api/supply/confirm/{supplyId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     GenericResponseDto sendConfirmReceivedRequest(@PathVariable Long supplyId);
 
+    @PutMapping(value = "/api/supply/cancel/{supplyId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    GenericResponseDto sendRejectedMessageRequest(@PathVariable Long supplyId);
 
 }

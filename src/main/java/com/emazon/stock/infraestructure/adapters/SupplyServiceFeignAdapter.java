@@ -21,7 +21,7 @@ public class SupplyServiceFeignAdapter implements SupplyServicePort {
     @Override
     public void communicateSupplyReceived(Long supplyId) throws InterruptedException {
 
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         try{
             GenericResponseDto genericResponseDto = supplyFeignClient.sendConfirmReceivedRequest(supplyId);
             supplyLogPersistencePort.updateSupplyConfirmedAt(supplyId, LocalDateTime.now());
@@ -34,6 +34,19 @@ public class SupplyServiceFeignAdapter implements SupplyServicePort {
 
     }
 
+    @Async("threadPoolExecutor")
+    @Override
+    public void communicateSupplyRejected(Long supplyId) throws InterruptedException {
+        Thread.sleep(2000);
+        try{
+            GenericResponseDto genericResponseDto = supplyFeignClient.sendRejectedMessageRequest(supplyId);
+           // supplyLogPersistencePort.updateSupplyConfirmedAt(supplyId, LocalDateTime.now());
+            System.out.println(genericResponseDto.getMessage());
+
+        }catch (FeignException feignException) {
+            System.out.println("Exception: + " + feignException.getMessage());
+        }
+    }
 
 
 }

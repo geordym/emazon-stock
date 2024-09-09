@@ -1,5 +1,6 @@
 package com.emazon.stock.domain.puertos.out;
 
+import com.emazon.stock.domain.exception.UpdatingStockException;
 import com.emazon.stock.domain.model.Articulo;
 import com.emazon.stock.domain.util.PaginationCustom;
 import com.emazon.stock.domain.util.PaginationParams;
@@ -13,6 +14,6 @@ public interface ArticuloRepositoryPort {
 
     Optional<Articulo> findArticleById(Long articleId);
 
-    void updateArticleStock(Long articleId, Integer quantity);
+    void updateArticleStock(Long articleId, Integer quantity) throws UpdatingStockException;
 
 }

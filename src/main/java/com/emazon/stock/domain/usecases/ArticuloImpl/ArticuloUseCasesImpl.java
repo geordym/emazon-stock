@@ -3,6 +3,7 @@ package com.emazon.stock.domain.usecases.ArticuloImpl;
 import com.emazon.stock.domain.exception.ArticuloCategoriaRepetidaException;
 import com.emazon.stock.domain.exception.ArticuloConExcesoCategoriasException;
 import com.emazon.stock.domain.exception.ArticuloConFaltaDeCategoriasException;
+import com.emazon.stock.domain.exception.UpdatingStockException;
 import com.emazon.stock.domain.model.Articulo;
 import com.emazon.stock.domain.model.Category;
 import com.emazon.stock.domain.model.SupplyLog;
@@ -51,15 +52,40 @@ public class ArticuloUseCasesImpl implements ArticuloUseCases {
 
     @Override
     public void updateArticleStock(Long supplyId, Long articleId, int quantity) throws InterruptedException {
-        Optional<SupplyLog> supplyLogOpt = supplyLogPersistencePort.findSupplyLogBySupplyId(supplyId);
+        boolean supplyExists = isSupplyLogPresentInPersistence(supplyId);
+        boolean articleExists = isArticlePresentInPersistence(articleId);
 
-        if (supplyLogOpt.isEmpty()) {
-            articuloRepositoryPort.updateArticleStock(articleId, quantity);
-            SupplyLog supplyLog = createSupplyLog(supplyId, articleId);
-            supplyLogPersistencePort.createSupplyLog(supplyLog);
+        if (supplyExists) {
+            supplyServicePort.communicateSupplyReceived(supplyId);
+            return;
         }
 
-        supplyServicePort.communicateSupplyReceived(supplyId);
+        if (!articleExists) {
+            supplyServicePort.communicateSupplyRejected(supplyId);
+            return;
+        }
+
+        try{
+            articuloRepositoryPort.updateArticleStock(articleId, quantity);
+            supplyLogPersistencePort.createSupplyLog(createSupplyLog(supplyId, articleId));
+            supplyServicePort.communicateSupplyReceived(supplyId);
+        }catch (UpdatingStockException ex){
+            throw new RuntimeException("Failed to update article stock", ex);
+        }
+
+    }
+
+
+
+    private boolean isArticlePresentInPersistence(Long articleId) {
+        Optional<Articulo> article = articuloRepositoryPort.findArticleById(articleId);
+        return article.isPresent();
+    }
+
+
+    private boolean isSupplyLogPresentInPersistence(Long supplyId){
+        Optional<SupplyLog> supplyLogOpt = supplyLogPersistencePort.findSupplyLogBySupplyId(supplyId);
+        return supplyLogOpt.isPresent();
     }
 
     private SupplyLog createSupplyLog(Long supplyId, Long articleId){

@@ -1,5 +1,6 @@
 package com.emazon.stock.infraestructure.adapters;
 
+import com.emazon.stock.domain.exception.UpdatingStockException;
 import com.emazon.stock.domain.model.Articulo;
 import com.emazon.stock.domain.puertos.out.ArticuloRepositoryPort;
 import com.emazon.stock.domain.puertos.out.CategoryRepositoryPort;
@@ -18,6 +19,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -93,8 +95,12 @@ public class ArticuloRepositoryMySQLAdapter implements ArticuloRepositoryPort {
 
     @Transactional
     @Override
-    public void updateArticleStock(Long articleId, Integer quantity) {
-        articuloCrudRepositoryMySQL.updateArticleStock(articleId, quantity);
+    public void updateArticleStock(Long articleId, Integer quantity) throws UpdatingStockException {
+        try {
+            articuloCrudRepositoryMySQL.updateArticleStock(articleId, quantity);
+        } catch (DataAccessException e) {
+            throw new UpdatingStockException(e);
+        }
     }
 
 
