@@ -8,6 +8,7 @@ import com.emazon.stock.infraestructure.mapper.ArticuloMapper;
 import com.emazon.stock.infraestructure.repositories.SupplyLogCrudRepositoryMySQL;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -34,6 +35,18 @@ public class SupplyLogPersistenceMySQLAdapter implements SupplyLogPersistencePor
         supplyLogEntity.setReceivedAt(supplyLog.getReceivedAt());
         supplyLogEntity.setConfirmedAt(supplyLog.getConfirmedAt());
 
+        supplyLogCrudRepositoryMySQL.save(supplyLogEntity);
+    }
+
+    @Override
+    public void updateSupplyConfirmedAt(Long supplyId, LocalDateTime confirmedAt) {
+        Optional<SupplyLogEntity> supplyLogEntityOpt = supplyLogCrudRepositoryMySQL.findSupplyLogBySupplyId(supplyId);
+        if(supplyLogEntityOpt.isEmpty()){
+            throw new IllegalArgumentException("The SupplyLog of SupplyId: " + supplyId + "Does not exist");
+        }
+
+        SupplyLogEntity supplyLogEntity = supplyLogEntityOpt.get();
+        supplyLogEntity.setConfirmedAt(LocalDateTime.now());
         supplyLogCrudRepositoryMySQL.save(supplyLogEntity);
     }
 
